@@ -12,7 +12,7 @@ function Navbar() {
   }
   return (
     <>
-      <h1>This is a navbar</h1>
+      <h1>logo</h1>
 
       <Outlet />
     </>

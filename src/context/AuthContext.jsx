@@ -18,11 +18,12 @@ function AuthContextWrapper({ children }) {
       setUser(null);
       setIsLoggedIn(false);
       setIsLoading(false);
+      console.log("No logged user");
       return;
     }
     try {
       const user = await myApi.getUserInfos();
-      // console.log(user)
+      console.log(user);
       setUser(user);
       setIsLoggedIn(true);
       setIsLoading(false);

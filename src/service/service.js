@@ -14,7 +14,7 @@ myApi.getUserInfos = async () => {
     .catch((error) => console.log(error));
 };
 
-myApi.signup = function (userInfos) {
+myApi.signup = async (userInfos) => {
   return myApi
     .post("/auth/signup", userInfos)
     .then((response) => response)
@@ -23,6 +23,7 @@ myApi.signup = function (userInfos) {
 
 myApi.interceptors.request.use((request) => {
   const token = localStorage.getItem("authToken");
+  console.log(token);
   if (!token) return request;
   request.headers.Authorization = `Bearer ${token}`;
   return request;

@@ -3,6 +3,8 @@ import { Routes, Route, Link, NavLink } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
+import LoginPage from "./components/LogIn";
+import SignupPage from "./components/SignUp";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
             </Route>
             <Route path="/offers">All offers</Route>
             <Route path="*" element={<ErrorPage />}></Route>
+            <Route path="/signup" element={<SignupPage />}></Route>
+            <Route path="/login" element={<LoginPage />}></Route>
 
             {/* available only for loggedIn users */}
             <Route path="/offers/:id">One offer</Route>

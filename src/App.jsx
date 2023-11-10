@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
 import LoginPage from "./components/LogIn";
 import SignupPage from "./components/SignUp";
+import NewOfferForm from "./components/NewOfferForm";
 
 function App() {
   return (
@@ -28,7 +29,9 @@ function App() {
 
             {/* available only for car dealers */}
             <Route path="/my-offers">My current offers</Route>
-            <Route path="/my-offers/create-new">Create a new offer</Route>
+            <Route path="/my-offers/create-new" element={<NewOfferForm />}>
+              r
+            </Route>
           </Route>
         </Routes>
       </div>

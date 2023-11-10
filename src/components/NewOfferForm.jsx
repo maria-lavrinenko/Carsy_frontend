@@ -28,6 +28,7 @@ function NewOfferForm() {
     fd.append("price", price);
     fd.append("year", year);
     fd.append("energy", energy);
+
     if (photoFileInput.length > 10) {
       setError("Sorry, only 10 photos allowed");
       setTimeout(() => {

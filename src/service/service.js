@@ -15,10 +15,7 @@ myApi.getUserInfos = async () => {
 };
 
 myApi.signup = async (userInfos) => {
-  return myApi
-    .post("/auth/signup", userInfos)
-    .then((response) => response)
-    .catch((error) => error);
+  return await myApi.post("/auth/signup", userInfos);
 };
 
 myApi.interceptors.request.use((request) => {

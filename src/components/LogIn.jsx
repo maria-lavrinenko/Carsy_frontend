@@ -40,11 +40,11 @@ function LoginPage() {
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="email">Email: </label>
-        <input type="text" ref={emailInput} id="email" autoComplete="off" />
+        <input type="text" ref={emailInput} id="email" required />
       </div>
       <div>
         <label htmlFor="password">Password: </label>
-        <input type="password" ref={passwordInput} id="password" />
+        <input type="password" ref={passwordInput} id="password" required />
       </div>
       <button>Login</button>
       <p className="error">{error}</p>

@@ -1,24 +1,31 @@
 import { useRef, useState } from "react";
 import myApi from "./../service/service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function SignupPage() {
   const usernameInput = useRef();
   const passwordInput = useRef();
   const emailInput = useRef();
-  const userTypeInput = useRef();
+  const [userType, setUserType] = useState(
+    location.state?.userType || "client"
+  );
   const zipcodeInput = useRef();
+  const userTypeInput = useRef();
   const cityInput = useRef();
   const phoneInput = useRef();
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  function handleRoleChange(e) {
+    setUserType(e.target.value);
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
     const username = usernameInput.current.value;
     const password = passwordInput.current.value;
     const email = emailInput.current.value;
-    // const userType = userTypeInput.current.value; to add also to the async function in the req body!!!!
+    const role = userTypeInput.current.value;
     const zipcode = zipcodeInput.current.value;
     const city = cityInput.current.value;
     const phone = phoneInput.current.value;
@@ -28,7 +35,7 @@ function SignupPage() {
         username,
         password,
         email,
-
+        role,
         zipcode,
         city,
         phone,
@@ -38,7 +45,7 @@ function SignupPage() {
       //   navigate("/login");
     } catch (error) {
       console.log(error);
-      //   setError(error.response.data.message);
+      setError(error.response.data.message);
       setTimeout(() => {
         setError("");
       }, 3000);
@@ -47,8 +54,21 @@ function SignupPage() {
   return (
     <form onSubmit={handleSubmit}>
       <div>
+        <label htmlFor="userType">You are a: </label>
+        <select ref={userTypeInput} id="userType" onChange={handleRoleChange}>
+          <option value="client">Client</option>
+          <option value="carDealer">Car Dealer</option>
+        </select>
+      </div>
+      <div>
         <label htmlFor="email">Email: </label>
-        <input type="text" ref={emailInput} id="email" autoComplete="off" />
+        <input
+          type="text"
+          ref={emailInput}
+          id="email"
+          required
+          autoComplete="off"
+        />
       </div>
       <div>
         <label htmlFor="username">Username: </label>
@@ -56,6 +76,7 @@ function SignupPage() {
           type="text"
           ref={usernameInput}
           id="username"
+          required
           autoComplete="off"
         />
       </div>
@@ -74,7 +95,14 @@ function SignupPage() {
       </div>
       <div>
         <label htmlFor="password">Password: </label>
-        <input type="password" ref={passwordInput} id="password" />
+        <input
+          type="password"
+          required
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+          title="Password must have at least 6 characters and contain at least one number, one lowercase and one uppercase letter."
+          ref={passwordInput}
+          id="password"
+        />
       </div>
       <div>
         <label htmlFor="phone">Phone</label>

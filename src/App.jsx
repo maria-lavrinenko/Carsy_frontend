@@ -1,6 +1,7 @@
 import "./App.css";
 import { Routes, Route, Link, NavLink } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import FavouritesPage from "./pages/FavouritesPage";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
 import LoginPage from "./components/LogIn";
@@ -13,9 +14,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route element={<Navbar />}>
-            <Route path="/" element={<HomePage />}>
-              Home Page
-            </Route>
+            <Route index element={<HomePage />} />
             <Route path="/offers">All offers</Route>
             <Route path="*" element={<ErrorPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>
@@ -25,13 +24,11 @@ function App() {
             <Route path="/offers/:id">One offer</Route>
 
             {/* available only for clients */}
-            <Route path="/fav">All favorite offers</Route>
+            <Route path="/fav" element={<FavouritesPage />}></Route>
 
             {/* available only for car dealers */}
             <Route path="/my-offers">My current offers</Route>
-            <Route path="/my-offers/create-new" element={<NewOfferForm />}>
-              r
-            </Route>
+            <Route path="/my-offers/create-new" element={<NewOfferForm />} />
           </Route>
         </Routes>
       </div>

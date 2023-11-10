@@ -12,9 +12,12 @@ function Navbar() {
   }
   return (
     <>
-      <h1>This is a Navbar</h1>
-
-      <Outlet />
+      <div className="Navbar">
+        <h1>This is a Navbar</h1>
+      </div>
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ListLayout from "../layouts/ListLayout";
+import List from "../layouts/List";
 import myApi from "../service/service";
 
 function FavouritesPage() {
@@ -23,7 +23,7 @@ function FavouritesPage() {
   }
   return (
     <>
-      <ListLayout offersToFetch={favOffers} />
+      <List offersToFetch={favOffers} />
     </>
   );
 }

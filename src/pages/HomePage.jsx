@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import myApi from "../service/service";
-import ListLayout from "../layouts/ListLayout";
+import List from "../layouts/List";
 
 function HomePage() {
   const [allOffers, setAllOffers] = useState(null);
@@ -24,7 +24,7 @@ function HomePage() {
 
   return (
     <>
-      <ListLayout offersToFetch={allOffers} />
+      <List offersToFetch={allOffers} />
       {/* <div id="all-filters">
         {allOffers.map((offer) => {
           return (

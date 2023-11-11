@@ -7,6 +7,8 @@ import ErrorPage from "./pages/ErrorPage";
 import LoginPage from "./components/LogIn";
 import SignupPage from "./components/SignUp";
 import NewOfferForm from "./components/NewOfferForm";
+import OneOfferPage from "./pages/OneOfferPage";
+import CarDealerOffersPage from "./pages/CarDealerOffersPage";
 
 function App() {
   return (
@@ -21,13 +23,13 @@ function App() {
             <Route path="/login" element={<LoginPage />}></Route>
 
             {/* available only for loggedIn users */}
-            <Route path="/offers/:id">One offer</Route>
+            <Route path="/offers/:id" element={<OneOfferPage />}></Route>
 
             {/* available only for clients */}
             <Route path="/fav" element={<FavouritesPage />}></Route>
 
             {/* available only for car dealers */}
-            <Route path="/my-offers">My current offers</Route>
+            <Route path="/my-offers" element={<CarDealerOffersPage />}></Route>
             <Route path="/my-offers/create-new" element={<NewOfferForm />} />
           </Route>
         </Routes>

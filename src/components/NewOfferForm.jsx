@@ -57,7 +57,12 @@ function NewOfferForm() {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="brand">Brand: </label>
-          <input type="text" ref={brandInput} id="brand" />
+          <input
+            pattern="[A-Z],[a-z]"
+            type="text"
+            ref={brandInput}
+            id="brand"
+          />
         </div>
         <div>
           <label htmlFor="model">Model: </label>
@@ -79,7 +84,12 @@ function NewOfferForm() {
         </div>
         <div>
           <label htmlFor="energy">Energy: </label>
-          <input type="text" ref={energyInput} id="energy" />
+          <input
+            pattern="[A-Z],[a-z]"
+            type="text"
+            ref={energyInput}
+            id="energy"
+          />
         </div>
         <div>
           <label htmlFor="photo">Photo </label>

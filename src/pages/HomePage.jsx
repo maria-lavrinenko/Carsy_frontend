@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import myApi from "../service/service";
 import List from "../layouts/List";
+import Filters from "../components/Filters";
 
 function HomePage() {
   const [allOffers, setAllOffers] = useState(null);
@@ -24,20 +25,8 @@ function HomePage() {
 
   return (
     <>
+      <Filters />
       <List offersToFetch={allOffers} />
-      {/* <div id="all-filters">
-        {allOffers.map((offer) => {
-          return (
-            <div>
-              <h1>{offer.brand}</h1>
-              <button key={offer._id} value={offer.brand}>
-                {offer.brand}
-              </button>
-              ;
-            </div>
-          );
-        })}
-      </div> */}
     </>
   );
 }

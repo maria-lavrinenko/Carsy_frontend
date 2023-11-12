@@ -9,6 +9,7 @@ import SignupPage from "./components/SignUp";
 import NewOfferForm from "./components/NewOfferForm";
 import OneOfferPage from "./pages/OneOfferPage";
 import CarDealerOffersPage from "./pages/CarDealerOffersPage";
+import AllOffersPage from "./pages/AllOffersPage";
 function App() {
   return (
     <>
@@ -16,7 +17,7 @@ function App() {
         <Routes>
           <Route element={<Navbar />}>
             <Route index element={<HomePage />} />
-            <Route path="/offers">All offers</Route>
+            <Route path="/offers" element={<AllOffersPage />}></Route>
             <Route path="*" element={<ErrorPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route>

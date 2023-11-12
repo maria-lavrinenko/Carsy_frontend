@@ -21,9 +21,12 @@ myApi.signup = async (userInfos) => {
 myApi.interceptors.request.use((request) => {
   const token = localStorage.getItem("authToken");
   console.log(token);
-  if (!token) return request;
-  request.headers.Authorization = `Bearer ${token}`;
-  return request;
+  if (!token) {
+    return request;
+  } else {
+    request.headers.Authorization = `Bearer ${token}`;
+    return request;
+  }
 });
 
 export default myApi;

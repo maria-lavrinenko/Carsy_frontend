@@ -30,7 +30,7 @@ function List(props) {
           </div>
         );
       })}
-      ;
+
       <Outlet />
     </>
   );

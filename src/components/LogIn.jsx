@@ -10,7 +10,7 @@ import { useAuth } from "./../context/AuthContext";
  * - useContext to well.. Use the context.?
  */
 
-function LoginPage() {
+function Login() {
   const emailInput = useRef();
   const passwordInput = useRef();
   const [error, setError] = useState("");
@@ -52,4 +52,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default Login;

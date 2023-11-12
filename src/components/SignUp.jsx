@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import myApi from "./../service/service";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function SignupPage() {
+function Signup() {
   const usernameInput = useRef();
   const passwordInput = useRef();
   const emailInput = useRef();
@@ -115,4 +115,4 @@ function SignupPage() {
   );
 }
 
-export default SignupPage;
+export default Signup;

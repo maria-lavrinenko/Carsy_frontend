@@ -10,7 +10,7 @@ function AllOffersPage() {
   const selectedBrand = searchParams.get("brand");
   const selectedModel = searchParams.get("model");
   const selectedEnergy = searchParams.get("energy");
-  const selectedLocation = searchParams.get("location");
+  const selectedCity = searchParams.get("city");
   const queryParams = new URLSearchParams();
 
   if (selectedBrand) {
@@ -22,8 +22,8 @@ function AllOffersPage() {
   if (selectedEnergy) {
     queryParams.append("energy", selectedEnergy);
   }
-  if (selectedLocation) {
-    queryParams.append("location", selectedLocation);
+  if (selectedCity) {
+    queryParams.append("city", selectedCity);
   }
 
   const fetchAllOffers = async () => {
@@ -38,7 +38,7 @@ function AllOffersPage() {
 
   useEffect(() => {
     fetchAllOffers();
-  }, [selectedBrand, selectedModel, selectedEnergy, selectedLocation]);
+  }, [selectedBrand, selectedModel, selectedEnergy, selectedCity]);
 
   if (!allOffers) {
     return <p>Loading...</p>;

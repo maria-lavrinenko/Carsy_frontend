@@ -47,7 +47,7 @@ function Filters() {
     queryParams.append("energy", energyFilter);
   }
   if (cityFilter) {
-    queryParams.append("location", cityFilter);
+    queryParams.append("city", cityFilter);
   }
 
   const handleClick = () => {
@@ -58,6 +58,7 @@ function Filters() {
       <div id="filters">
         <input
           type="text"
+          placeholder="BRAND"
           list="all-brands"
           value={selectedFilter.brand}
           onChange={(e) => {
@@ -73,6 +74,7 @@ function Filters() {
         </datalist>
         <input
           type="text"
+          placeholder="MODEL"
           list="all-models"
           value={selectedFilter.model}
           onChange={(e) => {
@@ -89,6 +91,7 @@ function Filters() {
 
         <input
           type="text"
+          placeholder="ENERGY"
           list="all-energy"
           value={selectedFilter.energy}
           onChange={(e) => {
@@ -105,6 +108,7 @@ function Filters() {
 
         <input
           type="text"
+          placeholder="CITY"
           list="all-cities"
           value={selectedFilter.city}
           onChange={(e) => {
@@ -122,12 +126,8 @@ function Filters() {
         <input
           type="text"
           list="all-prices"
-          //   value={selectedFilter.localisation}
-          //   onChange={(e) => {
-          //       console.log(e.target.dataset)
-          //       setSelectedUser(e.target.value)
-          //   }
-          // }
+          placeholder="MAX PRICE"
+          //   to add max price
         />
         <datalist id="all-prices">
           {allData.map((offer) => (

@@ -9,7 +9,6 @@ import SignupPage from "./components/SignUp";
 import NewOfferForm from "./components/NewOfferForm";
 import OneOfferPage from "./pages/OneOfferPage";
 import CarDealerOffersPage from "./pages/CarDealerOffersPage";
-
 function App() {
   return (
     <>

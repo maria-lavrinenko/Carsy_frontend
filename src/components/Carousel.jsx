@@ -9,6 +9,7 @@ export const CarouselItem = ({ src, width, indicators }) => {
 const Carousel = ({ children, indicators }) => {
   const [paused, setPaused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+
   if (children.length > 1) {
     const updateIndex = (newIndex) => {
       if (newIndex < 0) {
@@ -57,6 +58,7 @@ const Carousel = ({ children, indicators }) => {
             onClick={() => {
               updateIndex(activeIndex - 1);
             }}
+            disabled={children.length < 2}
           >
             Prev
           </button>
@@ -67,6 +69,7 @@ const Carousel = ({ children, indicators }) => {
                 onClick={() => {
                   updateIndex(index);
                 }}
+                disabled={children.length < 2}
               >
                 {index + 1}
               </button>
@@ -76,6 +79,7 @@ const Carousel = ({ children, indicators }) => {
             onClick={() => {
               updateIndex(activeIndex + 1);
             }}
+            disabled={children.length < 2}
           >
             Next
           </button>

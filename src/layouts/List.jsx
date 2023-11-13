@@ -14,16 +14,19 @@ function List(props) {
                 prop.offer ? `/offers/${prop.offer._id}` : `/offers/${prop._id}`
               }
             >
-              {/* <Carousel>
-                <CarouselItem>{prop.photo}</CarouselItem>
-              </Carousel> */}
-              {/* {prop.photo
-                ? prop.photo.map((onephoto, index) => {
-                    return <img key={index} src={onephoto} alt="car photo" />;
-                  })
-                : prop.offer.photo.map((onephoto, index) => {
-                    return <img key={index} src={onephoto} alt="car photo" />;
-                  })} */}
+              {prop.photo ? (
+                <Carousel indicators={false}>
+                  {prop.photo.map((photo) => (
+                    <CarouselItem src={photo} width={"100%"} />
+                  ))}
+                </Carousel>
+              ) : (
+                <Carousel indicators={false}>
+                  {prop.offer.photo.map((photo) => (
+                    <CarouselItem src={photo} width={"100%"} />
+                  ))}
+                </Carousel>
+              )}
 
               <div id="offer-card_info">
                 <h3>{prop.brand ?? prop.offer.brand}</h3>

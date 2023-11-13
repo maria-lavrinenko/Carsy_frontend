@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "./../context/AuthContext";
 
 function Logout() {
-  const { isLoggedIn, authenticateUser, user } = useAuth();
+  const { authenticateUser } = useAuth();
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");

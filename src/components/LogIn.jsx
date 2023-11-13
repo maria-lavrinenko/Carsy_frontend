@@ -4,12 +4,6 @@ import myApi from "./../service/service";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./../context/AuthContext";
 
-/**
- * To have access to the values store in a context we neee:
- * - the Context (AuthContext here)
- * - useContext to well.. Use the context.?
- */
-
 function Login() {
   const emailInput = useRef();
   const passwordInput = useRef();

@@ -37,6 +37,7 @@ function Filters() {
   const allCities = [
     ...new Set(allData.map((offer) => offer.result[0].address.city)),
   ];
+  const maxPrice = Math.max(...allData.map((offer) => offer.price));
 
   if (brandFilter) {
     queryParams.append("brand", brandFilter);
@@ -54,6 +55,7 @@ function Filters() {
   const handleClick = () => {
     navigate(`/offers?${queryParams}`);
   };
+  console.log(maxPrice);
   return (
     <>
       <div id="filters">
@@ -131,11 +133,11 @@ function Filters() {
           //   to add max price
         />
         <datalist id="all-prices">
-          {allData.map((offer) => (
-            <option key={offer.price} value={offer.price}>
-              {offer.price}
-            </option>
-          ))}
+          {
+            // <option key={offer.price} value={offer.price}>
+            //   {offer.price}
+            // </option>
+          }
         </datalist>
       </div>
 

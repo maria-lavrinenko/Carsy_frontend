@@ -87,11 +87,18 @@ function Signup() {
           ref={zipcodeInput}
           id="zipcode"
           autoComplete="off"
+          required
         />
       </div>
       <div>
         <label htmlFor="city">City: </label>
-        <input type="text" ref={cityInput} id="city" autoComplete="off" />
+        <input
+          type="text"
+          ref={cityInput}
+          id="city"
+          autoComplete="off"
+          required
+        />
       </div>
       <div>
         <label htmlFor="password">Password: </label>

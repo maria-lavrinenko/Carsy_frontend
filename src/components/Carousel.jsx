@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import "./Carousel.css";
 
-export const CarouselItem = ({ src, width, indicators }) => {
+export const CarouselItem = ({ src, width }) => {
   return <img className="carousel-item" style={{ width: width }} src={src} />;
 };
 
@@ -10,16 +10,15 @@ const Carousel = ({ children, indicators }) => {
   const [paused, setPaused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const updateIndex = (newIndex) => {
+    if (newIndex < 0) {
+      newIndex = children.length - 1;
+    } else if (newIndex >= children.length) {
+      newIndex = 0;
+    }
+    setActiveIndex(newIndex);
+  };
   if (children.length > 1) {
-    const updateIndex = (newIndex) => {
-      if (newIndex < 0) {
-        newIndex = children.length - 1;
-      } else if (newIndex >= children.length) {
-        newIndex = 0;
-      }
-      setActiveIndex(newIndex);
-    };
-
     useEffect(() => {
       const interval = setInterval(() => {
         if (!paused) {
@@ -58,7 +57,6 @@ const Carousel = ({ children, indicators }) => {
             onClick={() => {
               updateIndex(activeIndex - 1);
             }}
-            disabled={children.length < 2}
           >
             Prev
           </button>
@@ -69,7 +67,6 @@ const Carousel = ({ children, indicators }) => {
                 onClick={() => {
                   updateIndex(index);
                 }}
-                disabled={children.length < 2}
               >
                 {index + 1}
               </button>
@@ -79,7 +76,6 @@ const Carousel = ({ children, indicators }) => {
             onClick={() => {
               updateIndex(activeIndex + 1);
             }}
-            disabled={children.length < 2}
           >
             Next
           </button>

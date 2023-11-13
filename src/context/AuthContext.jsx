@@ -11,6 +11,8 @@ function AuthContextWrapper({ children }) {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCarDealer, setIsCarDealer] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   async function authenticateUser() {
     const token = localStorage.getItem("authToken");
@@ -27,6 +29,12 @@ function AuthContextWrapper({ children }) {
       setUser(user);
       setIsLoggedIn(true);
       setIsLoading(false);
+      if (user.role === "client") {
+        setIsClient(true);
+      }
+      if (user.role === "carDealer") {
+        setIsCarDealer(true);
+      }
     } catch (error) {
       setUser(null);
       setIsLoggedIn(false);
@@ -41,7 +49,14 @@ function AuthContextWrapper({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoggedIn, isLoading, authenticateUser }}
+      value={{
+        user,
+        isLoggedIn,
+        isLoading,
+        isCarDealer,
+        isClient,
+        authenticateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

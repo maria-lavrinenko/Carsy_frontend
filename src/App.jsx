@@ -9,6 +9,8 @@ import OneOfferPage from "./pages/OneOfferPage";
 import CarDealerOffersPage from "./pages/CarDealerOffersPage";
 import AllOffersPage from "./pages/AllOffersPage";
 import LoggedInUser from "./components/LoggedInUser";
+import ClientRoute from "./navigation/ClientRoute";
+import CarDealerRoute from "./navigation/CarDealerRoute";
 
 function App() {
   return (
@@ -21,11 +23,16 @@ function App() {
             <Route path="/offers" element={<AllOffersPage />}></Route>
             <Route element={<LoggedInUser />}>
               <Route path="/offers/:id" element={<OneOfferPage />}></Route>
-              <Route path="/fav" element={<FavouritesPage />}></Route>
-              <Route
-                path="/my-offers"
-                element={<CarDealerOffersPage />}
-              ></Route>
+
+              <Route element={<ClientRoute />}>
+                <Route path="/fav" element={<FavouritesPage />}></Route>
+              </Route>
+              <Route element={<CarDealerRoute />}>
+                <Route
+                  path="/my-offers"
+                  element={<CarDealerOffersPage />}
+                ></Route>
+              </Route>
             </Route>
             <Route path="*" element={<ErrorPage />}></Route>
           </Route>

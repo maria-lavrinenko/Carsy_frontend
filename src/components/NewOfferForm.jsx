@@ -68,13 +68,7 @@ function NewOfferForm({ setNewFormToggle, newFormToggle }) {
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="brand">Brand: </label>
-            <input
-              // pattern="[A-Z],[a-z]"
-              type="text"
-              ref={brandInput}
-              id="brand"
-              required
-            />
+            <input type="text" ref={brandInput} id="brand" required />
           </div>
           <div>
             <label htmlFor="model">Model: </label>

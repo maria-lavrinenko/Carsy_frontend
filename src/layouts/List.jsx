@@ -14,15 +14,15 @@ function List(props) {
                 prop.offer ? `/offers/${prop.offer._id}` : `/offers/${prop._id}`
               }
             >
-              {prop.photo ? (
+              {prop.offer ? (
                 <Carousel indicators={false}>
-                  {prop.photo.map((photo) => (
+                  {prop.offer.photo.map((photo) => (
                     <CarouselItem src={photo} width={"100%"} />
                   ))}
                 </Carousel>
               ) : (
                 <Carousel indicators={false}>
-                  {prop.offer.photo.map((photo) => (
+                  {prop.photo.map((photo) => (
                     <CarouselItem src={photo} width={"100%"} />
                   ))}
                 </Carousel>

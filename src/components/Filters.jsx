@@ -11,6 +11,7 @@ function Filters() {
   const [cityFilter, setLocationFilter] = useState("");
   const [allData, setAllData] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState("");
+  const [showRange, setShowRange] = useState(false);
   const queryParams = new URLSearchParams();
   const navigate = useNavigate();
 
@@ -125,20 +126,22 @@ function Filters() {
             </option>
           ))}
         </datalist>
-
         <input
           type="text"
-          list="all-prices"
           placeholder="MAX PRICE"
-          //   to add max price
+          onClick={() => setShowRange(!showRange)}
         />
-        <datalist id="all-prices">
-          {
-            // <option key={offer.price} value={offer.price}>
-            //   {offer.price}
-            // </option>
-          }
-        </datalist>
+        {showRange && (
+          <input
+            type="range"
+            placeholder="MAX PRICE"
+            value={selectedFilter.maxPrice}
+            max={maxPrice}
+            onChange={(e) => {
+              setPriceFilter(parseInt(e.target.value, 10));
+            }}
+          />
+        )}
       </div>
 
       <button onClick={handleClick}>Search</button>

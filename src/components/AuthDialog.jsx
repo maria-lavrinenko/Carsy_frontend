@@ -4,10 +4,10 @@ import Signup from "./SignUp";
 import "./AuthDialog.css";
 
 function AuthDialog() {
-  const [isFlipped, setFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const flipModal = () => {
-    setFlipped(!isFlipped);
+    setIsFlipped(!isFlipped);
   };
 
   return (
@@ -21,7 +21,7 @@ function AuthDialog() {
           </div>
 
           <div className="flip-modal-back">
-            <Signup />
+            <Signup isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
             Already have an account ?
             <button onClick={flipModal}>Log In !</button>
           </div>

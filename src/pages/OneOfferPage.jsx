@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import myApi from "../service/service";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,6 +12,10 @@ function OneOfferPage() {
   const [model, setModel] = useState("");
   const [energy, setEnergy] = useState("");
   const [price, setPrice] = useState("");
+  const [year, setYear] = useState("");
+  const photoInput = useRef();
+  const ref = useRef();
+  const [map, setMap] = useState();
 
   const { id } = useParams();
   const { user, isLoggedIn } = useAuth();
@@ -78,6 +82,7 @@ function OneOfferPage() {
       console.log(error);
     }
   };
+
   const handleBrand = (e) => {
     if (e.target.value !== "") {
       return setBrand(e.target.value);
@@ -98,13 +103,35 @@ function OneOfferPage() {
       return setPrice(e.target.value);
     }
   };
+  const handleYear = (e) => {
+    if (e.target.value !== "") {
+      return setYear(e.target.value);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const updatedOffer = { brand, model, price, energy };
+    const fd = new FormData();
+    fd.append("brand", brand);
+    fd.append("model", model);
+    fd.append("price", price);
+    fd.append("year", year);
+    fd.append("energy", energy);
 
+    const photoFileInput = photoInput.current.files;
+    if (photoFileInput.length > 10) {
+      setError("Sorry, only 10 photos allowed");
+      setTimeout(() => {
+        setError("");
+      }, 1500);
+      return;
+    }
+
+    for (let i = 0; i < photoFileInput.length; i++) {
+      fd.append("photo", photoInput.current.files[i]);
+    }
     try {
-      const response = await myApi.put(`/offers/${id}`, updatedOffer);
+      const response = await myApi.put(`/offers/${id}`, fd);
 
       console.log(response);
       setToUpdate(true);
@@ -113,6 +140,12 @@ function OneOfferPage() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (ref.current && !map) {
+      setMap(new window.google.maps.Map(ref.current, {}));
+    }
+  }, [ref, map]);
 
   return (
     <>
@@ -205,16 +238,28 @@ function OneOfferPage() {
                   onChange={handleEnergy}
                 />
               </div>
-              {/* <div>
+              <div>
+                <label htmlFor="year">Year: </label>
+                <input
+                  type="text"
+                  id="year"
+                  maxLength="4"
+                  pattern="\d{4}"
+                  value={year}
+                  onChange={handleYear}
+                />
+              </div>
+              <div>
                 <label htmlFor="photo">Photo </label>
                 <input
+                  ref={photoInput}
                   accept="image/png, image/jpeg"
                   type="file"
                   multiple
                   name=""
                   id="photo"
                 />
-              </div> */}
+              </div>
               <button>Submit Update</button>
             </form>
           </div>

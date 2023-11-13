@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import myApi from "./../service/service";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function Signup() {
+function Signup({ isFlipped, setIsFlipped }) {
   const usernameInput = useRef();
   const passwordInput = useRef();
   const emailInput = useRef();
@@ -14,7 +14,6 @@ function Signup() {
   const cityInput = useRef();
   const phoneInput = useRef();
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   function handleRoleChange(e) {
     setUserType(e.target.value);
@@ -41,8 +40,7 @@ function Signup() {
         phone,
       });
       console.log("success", response);
-      //   change for a toggle!!! singUp - logIn//
-      //   navigate("/login");
+      setIsFlipped(!isFlipped);
     } catch (error) {
       console.log(error);
       setError(error.response.data.message);

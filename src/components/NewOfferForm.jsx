@@ -4,6 +4,8 @@ import myApi from "./../service/service";
 import { useNavigate } from "react-router-dom";
 
 function NewOfferForm() {
+  const navigate = useNavigate();
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const brandInput = useRef();
   const modelInput = useRef();
   const priceInput = useRef();
@@ -12,14 +14,18 @@ function NewOfferForm() {
   const photoInput = useRef();
 
   const [error, setError] = useState("");
-  //   const navigate = useNavigate();
+
   async function handleSubmit(event) {
     event.preventDefault();
     const brand = brandInput.current.value.toUpperCase();
-    const model = modelInput.current.value.toLowerCase();
+    const model =
+      modelInput.current.value.charAt(0).toUpperCase() +
+      modelInput.current.value.slice(1).toLowerCase();
     const price = priceInput.current.value;
     const year = yearInput.current.value;
-    const energy = energyInput.current.value.toLowerCase();
+    const energy =
+      energyInput.current.value.charAt(0).toUpperCase() +
+      energyInput.current.value.slice(1).toLowerCase();
     const photoFileInput = photoInput.current.files;
 
     const fd = new FormData();
@@ -43,7 +49,8 @@ function NewOfferForm() {
     try {
       const response = await myApi.post("/offers", fd);
       console.log("success", response);
-      //   navigate("/");
+      setFormSubmitted(true);
+      navigate("/my-offers");
     } catch (error) {
       console.log(error.response);
       setError(error.response.data.message);
@@ -54,57 +61,62 @@ function NewOfferForm() {
   }
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="brand">Brand: </label>
-          <input
-            pattern="[A-Z],[a-z]"
-            type="text"
-            ref={brandInput}
-            id="brand"
-          />
-        </div>
-        <div>
-          <label htmlFor="model">Model: </label>
-          <input type="text" ref={modelInput} id="model" />
-        </div>
-        <div>
-          <label htmlFor="price">Price: </label>
-          <input type="number" ref={priceInput} id="price" />
-        </div>
-        <div>
-          <label htmlFor="year">Year: </label>
-          <input
-            type="text"
-            maxLength="4"
-            pattern="\d{4}"
-            ref={yearInput}
-            id="year"
-          />
-        </div>
-        <div>
-          <label htmlFor="energy">Energy: </label>
-          <input
-            pattern="[A-Z],[a-z]"
-            type="text"
-            ref={energyInput}
-            id="energy"
-          />
-        </div>
-        <div>
-          <label htmlFor="photo">Photo </label>
-          <input
-            ref={photoInput}
-            accept="image/png, image/jpeg"
-            type="file"
-            multiple
-            name=""
-            id="photo"
-          />
-        </div>
-        <button>Submit</button>
-        <p className="error">{error}</p>
-      </form>
+      {!formSubmitted && (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="brand">Brand: </label>
+            <input
+              // pattern="[A-Z],[a-z]"
+              type="text"
+              ref={brandInput}
+              id="brand"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="model">Model: </label>
+            <input type="text" ref={modelInput} id="model" required />
+          </div>
+          <div>
+            <label htmlFor="price">Price: </label>
+            <input type="number" ref={priceInput} id="price" required />
+          </div>
+          <div>
+            <label htmlFor="year">Year: </label>
+            <input
+              type="text"
+              maxLength="4"
+              pattern="\d{4}"
+              ref={yearInput}
+              id="year"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="energy">Energy: </label>
+            <input
+              // pattern="[A-Z],[a-z]"
+              type="text"
+              ref={energyInput}
+              id="energy"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="photo">Photo </label>
+            <input
+              ref={photoInput}
+              accept="image/png, image/jpeg"
+              type="file"
+              multiple
+              name=""
+              id="photo"
+            />
+          </div>
+          <button>Submit</button>
+          <p className="error">{error}</p>
+        </form>
+      )}
     </>
   );
 }

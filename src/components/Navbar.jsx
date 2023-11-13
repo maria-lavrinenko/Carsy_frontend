@@ -1,31 +1,75 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import AuthDialog from "./AuthDialog";
+import NewOfferForm from "./NewOfferForm";
+import Logout from "./Logout";
 
 function Navbar() {
-  const [toggle, setToggle] = useState(false);
+  const [authToggle, setAuthToggle] = useState(false);
+  const [newFormToggle, setNewFormToggle] = useState(false);
+  const { isLoggedIn, user } = useAuth();
 
-  {
-    /* Navbar : 
-          LogIn/Signup modal
-          
-          logout button if the user is logged in
-          if cardealer logged in : create a new offer, view all offers
-
-          if a client logged in : view all fav
-          
-          */
-  }
+  console.log(user);
   return (
     <>
       <div className="Navbar">
-        <h1>This is a Navbar</h1>
-      </div>
-      <button onClick={() => setToggle(!toggle)}>toggle Auth</button>
+        <nav>
+          <ul>
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
 
-      {toggle && <AuthDialog />}
+            <li>
+              <NavLink to="/about">About</NavLink>
+            </li>
+          </ul>
+        </nav>
+
+        <nav>
+          <ul>
+            {isLoggedIn ? (
+              <Logout />
+            ) : (
+              <>
+                <li>
+                  <button onClick={() => setAuthToggle(!authToggle)}>
+                    toggle Auth
+                  </button>
+
+                  {authToggle && <AuthDialog />}
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
+        <nav>
+          <ul>
+            {isLoggedIn && user && user.role === "carDealer" && (
+              <div>
+                <li>
+                  <sec onClick={() => setNewFormToggle(!newFormToggle)}>
+                    New Offer
+                  </sec>
+                  {newFormToggle && <NewOfferForm />}
+                </li>
+
+                <li>
+                  <NavLink to="/my-offers">My Offers</NavLink>
+                </li>
+              </div>
+            )}
+          </ul>
+        </nav>
+        <nav>
+          <ul>
+            {isLoggedIn && user && user.role === "client" && (
+              <NavLink to="/fav">My Favourites</NavLink>
+            )}
+          </ul>
+        </nav>
+      </div>
 
       <main>
         <Outlet />

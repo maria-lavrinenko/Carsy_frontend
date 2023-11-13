@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import myApi from "../service/service";
 import { useNavigate, useParams } from "react-router-dom";
+import "./Filters.css";
 
 function Filters() {
   const [brandFilter, setBrandFilter] = useState("");

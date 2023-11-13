@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
+import Carousel, { CarouselItem } from "../components/Carousel";
 
 function List(props) {
   console.log(props);
@@ -13,13 +14,16 @@ function List(props) {
                 prop.offer ? `/offers/${prop.offer._id}` : `/offers/${prop._id}`
               }
             >
-              {prop.photo
+              {/* <Carousel>
+                <CarouselItem>{prop.photo}</CarouselItem>
+              </Carousel> */}
+              {/* {prop.photo
                 ? prop.photo.map((onephoto, index) => {
                     return <img key={index} src={onephoto} alt="car photo" />;
                   })
                 : prop.offer.photo.map((onephoto, index) => {
                     return <img key={index} src={onephoto} alt="car photo" />;
-                  })}
+                  })} */}
 
               <div id="offer-card_info">
                 <h3>{prop.brand ?? prop.offer.brand}</h3>

@@ -1,11 +1,13 @@
 import React, { useRef, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "../context/FormContext";
 
 import myApi from "./../service/service";
-import { useNavigate } from "react-router-dom";
 
-function NewOfferForm() {
+function NewOfferForm({ setNewFormToggle, newFormToggle }) {
   const navigate = useNavigate();
-  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const { isSubmitted, setIsSubmitted } = useForm();
   const brandInput = useRef();
   const modelInput = useRef();
   const priceInput = useRef();
@@ -49,7 +51,8 @@ function NewOfferForm() {
     try {
       const response = await myApi.post("/offers", fd);
       console.log("success", response);
-      setFormSubmitted(true);
+      setIsSubmitted(true);
+      setNewFormToggle((current) => !current);
       navigate("/my-offers");
     } catch (error) {
       console.log(error.response);
@@ -61,7 +64,7 @@ function NewOfferForm() {
   }
   return (
     <>
-      {!formSubmitted && (
+      {newFormToggle && (
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="brand">Brand: </label>
@@ -95,7 +98,7 @@ function NewOfferForm() {
           <div>
             <label htmlFor="energy">Energy: </label>
             <input
-              // pattern="[A-Z],[a-z]"
+              pattern="[A-Za-z]{2,}"
               type="text"
               ref={energyInput}
               id="energy"

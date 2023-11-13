@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import List from "../layouts/List";
 import myApi from "../service/service";
 import NewOfferForm from "../components/NewOfferForm";
+import { useForm } from "./../context/FormContext";
 
 function CarDealerOffersPage() {
   const [myOffers, setMyOffers] = useState(null);
+  const { isSubmitted, setIsSubmitted } = useForm();
 
   const fetchMyOffers = async () => {
     try {
-      const response = await myApi.get("/my-offers", {});
+      const response = await myApi.get("/my-offers");
       console.log(response.data);
       setMyOffers(response.data);
     } catch (error) {
@@ -18,7 +20,7 @@ function CarDealerOffersPage() {
 
   useEffect(() => {
     fetchMyOffers();
-  }, []);
+  }, [isSubmitted]);
 
   if (!myOffers) {
     return <p>Loading...</p>;

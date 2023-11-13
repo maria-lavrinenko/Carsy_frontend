@@ -49,10 +49,15 @@ function Navbar() {
             {isLoggedIn && user && user.role === "carDealer" && (
               <div>
                 <li>
-                  <sec onClick={() => setNewFormToggle(!newFormToggle)}>
+                  <div onClick={() => setNewFormToggle(!newFormToggle)}>
                     New Offer
-                  </sec>
-                  {newFormToggle && <NewOfferForm />}
+                  </div>
+                  {newFormToggle && (
+                    <NewOfferForm
+                      setNewFormToggle={setNewFormToggle}
+                      newFormToggle={newFormToggle}
+                    />
+                  )}
                 </li>
 
                 <li>

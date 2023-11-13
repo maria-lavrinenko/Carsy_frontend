@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import myApi from "../service/service";
 import { useNavigate, useParams } from "react-router-dom";
+import Carousel, { CarouselItem } from "../components/Carousel";
 
 function OneOfferPage() {
   const [oneOffer, setOneOffer] = useState();
@@ -77,6 +78,11 @@ function OneOfferPage() {
   return (
     <>
       <div id="oneOffer-card" key={id}>
+        <Carousel indicators={true}>
+          {oneOffer.photo.map((photo) => (
+            <CarouselItem src={photo} width={"100%"} />
+          ))}
+        </Carousel>
         <h3>{oneOffer.brand}</h3>
         <h3>{oneOffer.model}</h3>
         <h4>{oneOffer.price}</h4>

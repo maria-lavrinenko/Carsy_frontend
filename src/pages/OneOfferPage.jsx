@@ -7,6 +7,12 @@ import Carousel, { CarouselItem } from "../components/Carousel";
 function OneOfferPage() {
   const [oneOffer, setOneOffer] = useState();
   const [isFavorite, setIsFavourite] = useState(false);
+  const [toUpdate, setToUpdate] = useState(false);
+  const [brand, setBrand] = useState("");
+  const [model, setModel] = useState("");
+  const [energy, setEnergy] = useState("");
+  const [price, setPrice] = useState("");
+
   const { id } = useParams();
   const { user, isLoggedIn } = useAuth();
   const navigate = useNavigate();
@@ -34,7 +40,7 @@ function OneOfferPage() {
   useEffect(() => {
     fetchOneOffer();
     checkIfFav();
-  }, []);
+  }, [toUpdate]);
 
   if (!oneOffer) {
     return <p>Loading...</p>;
@@ -72,8 +78,41 @@ function OneOfferPage() {
       console.log(error);
     }
   };
+  const handleBrand = (e) => {
+    if (e.target.value !== "") {
+      return setBrand(e.target.value);
+    }
+  };
+  const handleModel = (e) => {
+    if (e.target.value !== "") {
+      return setModel(e.target.value);
+    }
+  };
+  const handleEnergy = (e) => {
+    if (e.target.value !== "") {
+      return setEnergy(e.target.value);
+    }
+  };
+  const handlePrice = (e) => {
+    if (e.target.value !== "") {
+      return setPrice(e.target.value);
+    }
+  };
 
-  console.log(oneOffer);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const updatedOffer = { brand, model, price, energy };
+
+    try {
+      const response = await myApi.put(`/offers/${id}`, updatedOffer);
+
+      console.log(response);
+      setToUpdate(true);
+      // navigate(`/projects/${params.projectId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -103,7 +142,13 @@ function OneOfferPage() {
             {isMyOffer && (
               <div>
                 <button onClick={handleDelete}>Delete</button>
-                <button>Update</button>
+                <button
+                  onClick={() => {
+                    setToUpdate(true);
+                  }}
+                >
+                  Update
+                </button>
               </div>
             )}
 
@@ -119,8 +164,63 @@ function OneOfferPage() {
           </div>
         </div>
       </div>
+      {toUpdate && (
+        <div id="update-offer">
+          <div>
+            <h1>Update The Offer</h1>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="brand">Brand: </label>
+                <input
+                  type="text"
+                  id="brand"
+                  value={brand}
+                  onChange={handleBrand}
+                />
+              </div>
+              <div>
+                <label htmlFor="model">Model: </label>
+                <input
+                  type="text"
+                  id="model"
+                  value={model}
+                  onChange={handleModel}
+                />
+              </div>
+              <div>
+                <label htmlFor="price">Price: </label>
+                <input
+                  type="text"
+                  id="price"
+                  value={price}
+                  onChange={handlePrice}
+                />
+              </div>
+              <div>
+                <label htmlFor="energy">Energy: </label>
+                <input
+                  type="text"
+                  id="energy"
+                  value={energy}
+                  onChange={handleEnergy}
+                />
+              </div>
+              {/* <div>
+                <label htmlFor="photo">Photo </label>
+                <input
+                  accept="image/png, image/jpeg"
+                  type="file"
+                  multiple
+                  name=""
+                  id="photo"
+                />
+              </div> */}
+              <button>Submit Update</button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }
-
 export default OneOfferPage;

@@ -1,10 +1,9 @@
 import "./App.css";
-import { Routes, Route, Link, NavLink } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import FavouritesPage from "./pages/FavouritesPage";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
-import NewOfferForm from "./components/NewOfferForm";
 import OneOfferPage from "./pages/OneOfferPage";
 import CarDealerOffersPage from "./pages/CarDealerOffersPage";
 import AllOffersPage from "./pages/AllOffersPage";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import List from "../layouts/List";
 import myApi from "../service/service";
-import NewOfferForm from "../components/NewOfferForm";
+
 import { useForm } from "./../context/FormContext";
 
 function CarDealerOffersPage() {
@@ -26,12 +26,7 @@ function CarDealerOffersPage() {
     return <p>Loading...</p>;
   }
   if (myOffers.length === 0) {
-    return (
-      <div>
-        It seems like you haven't published any offer yet...you can do it here{" "}
-        <NewOfferForm />
-      </div>
-    );
+    return <div>It seems like you haven't published any offer yet...</div>;
   }
   return (
     <>

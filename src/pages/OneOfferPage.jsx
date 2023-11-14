@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+
 import { useAuth } from "../context/AuthContext";
 import myApi from "../service/service";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,12 +16,15 @@ function OneOfferPage() {
   const [price, setPrice] = useState("");
   const [year, setYear] = useState("");
   const photoInput = useRef();
-  const ref = useRef();
-  const [map, setMap] = useState();
 
   const { id } = useParams();
   const { user, isLoggedIn } = useAuth();
   const navigate = useNavigate();
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: import.meta.env.API_KEY,
+  });
+  // const center = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
 
   const fetchOneOffer = async () => {
     try {
@@ -42,6 +46,7 @@ function OneOfferPage() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     console.log("Fetching offer...");
     fetchOneOffer();
@@ -143,21 +148,7 @@ function OneOfferPage() {
     }
   };
 
-  const render = ({ status: Status }) => {
-    return <h1>{status}</h1>;
-  };
-
-  useEffect(() => {
-    if (ref.current && !map) {
-      setMap(
-        new window.google.maps.Map(ref.current, {
-          center: { lat: -25.344, lng: 131.031 },
-          zoom: 12,
-        })
-      );
-    }
-  }, [ref, map]);
-  console.log(oneOffer);
+  // console.log(oneOffer);
 
   return (
     <>
@@ -182,111 +173,122 @@ function OneOfferPage() {
         ) : (
           ""
         )}
-        {
-          <Wrapper apiKey={import.meta.env.GOOGLE_API_KEY} render={render}>
-            <div
-              id="map"
-              style={{ width: "100%", height: "200px" }}
-              ref={ref}
-            ></div>
-          </Wrapper>
-        }
+        <div className="container">
+          <div style={{ width: "100%", height: "90vh" }}>
+            {!isLoaded ? (
+              <GoogleMap
+                center={{ lat: 40.397654, lng: 49.68543 }}
+                zoom={10}
+                mapContainerStyle={{
+                  width: "100%",
+                  height: "90vh",
+                }}
+              >
+                <Marker
+                  position={{ lat: 18.52043, lng: 73.856743 }}
+                  icon={
+                    "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                  }
+                />
+              </GoogleMap>
+            ) : null}
+          </div>
+          <div id="action-buttons">
+            <div>
+              {isMyOffer && (
+                <div>
+                  <button onClick={handleDelete}>Delete</button>
+                  <button
+                    onClick={() => {
+                      setToUpdate(true);
+                    }}
+                  >
+                    Update
+                  </button>
+                </div>
+              )}
 
-        <div id="action-buttons">
-          <div>
-            {isMyOffer && (
-              <div>
-                <button onClick={handleDelete}>Delete</button>
-                <button
-                  onClick={() => {
-                    setToUpdate(true);
-                  }}
-                >
-                  Update
-                </button>
-              </div>
-            )}
-
-            {user.role === "client" && (
-              <div>
-                {isFavorite ? (
-                  <button onClick={handleUnlike}>Unlike</button>
-                ) : (
-                  <button onClick={handleLike}>Like</button>
-                )}
-              </div>
-            )}
+              {user.role === "client" && (
+                <div>
+                  {isFavorite ? (
+                    <button onClick={handleUnlike}>Unlike</button>
+                  ) : (
+                    <button onClick={handleLike}>Like</button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
+        {toUpdate && (
+          <div id="update-offer">
+            <div>
+              <h1>Update The Offer</h1>
+              <form onSubmit={handleSubmit}>
+                <div>
+                  <label htmlFor="brand">Brand: </label>
+                  <input
+                    type="text"
+                    id="brand"
+                    value={brand}
+                    onChange={handleBrand}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="model">Model: </label>
+                  <input
+                    type="text"
+                    id="model"
+                    value={model}
+                    onChange={handleModel}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="price">Price: </label>
+                  <input
+                    type="text"
+                    id="price"
+                    value={price}
+                    onChange={handlePrice}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="energy">Energy: </label>
+                  <input
+                    type="text"
+                    id="energy"
+                    value={energy}
+                    onChange={handleEnergy}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="year">Year: </label>
+                  <input
+                    type="text"
+                    id="year"
+                    maxLength="4"
+                    pattern="\d{4}"
+                    value={year}
+                    onChange={handleYear}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="photo">Photo </label>
+                  <input
+                    ref={photoInput}
+                    accept="image/png, image/jpeg"
+                    type="file"
+                    multiple
+                    name=""
+                    id="photo"
+                  />
+                </div>
+                <button>Submit Update</button>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
-      {toUpdate && (
-        <div id="update-offer">
-          <div>
-            <h1>Update The Offer</h1>
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="brand">Brand: </label>
-                <input
-                  type="text"
-                  id="brand"
-                  value={brand}
-                  onChange={handleBrand}
-                />
-              </div>
-              <div>
-                <label htmlFor="model">Model: </label>
-                <input
-                  type="text"
-                  id="model"
-                  value={model}
-                  onChange={handleModel}
-                />
-              </div>
-              <div>
-                <label htmlFor="price">Price: </label>
-                <input
-                  type="text"
-                  id="price"
-                  value={price}
-                  onChange={handlePrice}
-                />
-              </div>
-              <div>
-                <label htmlFor="energy">Energy: </label>
-                <input
-                  type="text"
-                  id="energy"
-                  value={energy}
-                  onChange={handleEnergy}
-                />
-              </div>
-              <div>
-                <label htmlFor="year">Year: </label>
-                <input
-                  type="text"
-                  id="year"
-                  maxLength="4"
-                  pattern="\d{4}"
-                  value={year}
-                  onChange={handleYear}
-                />
-              </div>
-              <div>
-                <label htmlFor="photo">Photo </label>
-                <input
-                  ref={photoInput}
-                  accept="image/png, image/jpeg"
-                  type="file"
-                  multiple
-                  name=""
-                  id="photo"
-                />
-              </div>
-              <button>Submit Update</button>
-            </form>
-          </div>
-        </div>
-      )}
     </>
   );
 }

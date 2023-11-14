@@ -1,15 +1,14 @@
 import { useRef, useState } from "react";
 import myApi from "./../service/service";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuthForm } from "../context/AuthFormContext";
 
-function Signup({ isFlipped, setIsFlipped, userType, setUserType }) {
+function Signup({ isFlipped, setIsFlipped }) {
   const usernameInput = useRef();
   const passwordInput = useRef();
   const emailInput = useRef();
-  // const userTypeState = useLocation();
-  // const [userType, setUserType] = useState(
-  //   location.state?.userTypeState || "client"
-  // );
+  const { userType, setUserType } = useAuthForm();
+
   const zipcodeInput = useRef();
   const userTypeInput = useRef();
   const cityInput = useRef();
@@ -53,7 +52,12 @@ function Signup({ isFlipped, setIsFlipped, userType, setUserType }) {
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="userType">You are a: </label>
-        <select ref={userTypeInput} id="userType" onChange={handleRoleChange}>
+        <select
+          ref={userTypeInput}
+          id="userType"
+          onChange={handleRoleChange}
+          defaultValue={userType}
+        >
           <option value="client">Client</option>
           <option value="carDealer">Car Dealer</option>
         </select>

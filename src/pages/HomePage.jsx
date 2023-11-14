@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import myApi from "../service/service";
 import List from "../layouts/List";
 import Filters from "../components/Filters";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "./../context/AuthContext";
+import { useAuthForm } from "../context/AuthFormContext";
 
 function HomePage() {
   const [allOffers, setAllOffers] = useState(null);
-  const navigate = useNavigate()
+  const { isLoggedIn } = useAuth();
+  const { authToggle, setAuthToggle, userType, setUserType } = useAuthForm();
   const fetchAllOffers = async () => {
     try {
       const response = await myApi.get("/offers");
@@ -17,10 +19,6 @@ function HomePage() {
     }
   };
 
-  const handleClientSignUp = () {
-
-  }
-
   useEffect(() => {
     fetchAllOffers();
   }, []);
@@ -28,16 +26,29 @@ function HomePage() {
   if (!allOffers) {
     return <p>Loading...</p>;
   }
-
+  const handleClientSignUp = () => {
+    setUserType("client");
+    setAuthToggle(!authToggle);
+  };
+  const handleCarDealerSignUp = () => {
+    setUserType("carDealer");
+    setAuthToggle(!authToggle);
+  };
   return (
     <>
       <Filters />
       <List offersToFetch={allOffers} />
       <div id="auth">
-        <div onClick={handleClientSignUp}>I'm a client, I want to buy</div>
-        <div onClick={handleCarDealerSignUp}>
-          I'a a car dealer, I want to sell
-        </div>
+        {!isLoggedIn && (
+          <div id="auth">
+            <button onClick={handleClientSignUp}>
+              I'm a client, I want to buy
+            </button>
+            <button onClick={handleCarDealerSignUp}>
+              I'm a car dealer, I want to sell
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

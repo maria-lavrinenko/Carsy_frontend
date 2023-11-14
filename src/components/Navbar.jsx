@@ -5,9 +5,10 @@ import { useState } from "react";
 import AuthDialog from "./AuthDialog";
 import NewOfferForm from "./NewOfferForm";
 import Logout from "./Logout";
+import { useAuthForm } from "../context/AuthFormContext";
 
 function Navbar() {
-  const [authToggle, setAuthToggle] = useState(false);
+  const { authToggle, setAuthToggle } = useAuthForm();
   const [newFormToggle, setNewFormToggle] = useState(false);
   const { isLoggedIn, user } = useAuth();
 

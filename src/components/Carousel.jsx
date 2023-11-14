@@ -24,7 +24,7 @@ const Carousel = ({ children, indicators }) => {
         if (!paused) {
           updateIndex(activeIndex + 1);
         }
-      }, 1000);
+      }, 2000);
       return () => {
         if (interval) {
           clearInterval(interval);

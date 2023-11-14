@@ -7,10 +7,12 @@ import Filters from "../components/Filters";
 function AllOffersPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [allOffers, setAllOffers] = useState(null);
+  const [sortby, setSortby] = useState("");
   const selectedBrand = searchParams.get("brand");
   const selectedModel = searchParams.get("model");
   const selectedEnergy = searchParams.get("energy");
   const selectedCity = searchParams.get("city");
+  const selectedPrice = searchParams.get("price");
   const queryParams = new URLSearchParams();
 
   if (selectedBrand) {
@@ -25,6 +27,9 @@ function AllOffersPage() {
   if (selectedCity) {
     queryParams.append("city", selectedCity);
   }
+  if (selectedPrice) {
+    queryParams.append("price", selectedPrice);
+  }
 
   const fetchAllOffers = async () => {
     try {
@@ -38,19 +43,50 @@ function AllOffersPage() {
 
   useEffect(() => {
     fetchAllOffers();
-  }, [selectedBrand, selectedModel, selectedEnergy, selectedCity]);
+  }, [
+    selectedBrand,
+    selectedModel,
+    selectedEnergy,
+    selectedCity,
+    selectedPrice,
+    sortby,
+  ]);
 
   if (!allOffers) {
     return <p>Loading...</p>;
   }
 
+  const handleSortChange = (e) => {
+    const key = e.target.value;
+    if (!allOffers) return;
+    let sortedOffers;
+    if (key === "descreasing-price") {
+      sortedOffers = allOffers.toSorted((a, b) => {
+        b.price - a.price;
+      });
+    } else if (key === "increasing-price") {
+      sortedOffers = allOffers.toSorted((a, b) => {
+        a.price - b.price;
+      });
+    }
+
+    setAllOffers(sortedOffers);
+    setSortby(key);
+    // fetchAllOffers();
+  };
+
   return (
     <>
       <Filters />
-      {/* ADD SORT BY */}
+      <div className="sort-container">
+        <select id="sort-select" onChange={handleSortChange} value={sortby}>
+          <option value="">Sort by: </option>
+          <option value="descreasing-price">Sort by: Price ()</option>
+          <option value="increasing-price">Sort by: Price()</option>
+        </select>
+      </div>
       <List offersToFetch={allOffers} />
     </>
   );
 }
-
 export default AllOffersPage;

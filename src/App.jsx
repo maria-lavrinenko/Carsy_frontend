@@ -1,5 +1,4 @@
 import "./App.css";
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import FavouritesPage from "./pages/FavouritesPage";
@@ -12,10 +11,6 @@ import LoggedInUser from "./components/LoggedInUser";
 import ClientRoute from "./navigation/ClientRoute";
 import CarDealerRoute from "./navigation/CarDealerRoute";
 
-const render = ({ status: Status }) => {
-  return <h1>{status}</h1>;
-};
-
 function App() {
   return (
     <>
@@ -26,9 +21,7 @@ function App() {
             <Route path="/about">About Me</Route>
             <Route path="/offers" element={<AllOffersPage />}></Route>
             <Route element={<LoggedInUser />}>
-              {/* <Wrapper apiKey={import.meta.env.GOOGLE_API_KEY} render={render}>
-                <Route path="/offers/:id" element={<OneOfferPage />}></Route>
-              </Wrapper> */}
+              <Route path="/offers/:id" element={<OneOfferPage />}></Route>
 
               <Route element={<ClientRoute />}>
                 <Route path="/fav" element={<FavouritesPage />}></Route>

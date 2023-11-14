@@ -29,7 +29,7 @@ function Filters() {
     fetchAllData();
   }, []);
 
-  if (!allData) {
+  if (!allData || allData.length === 0) {
     return <p>Loading...</p>;
   }
   const allBrands = [...new Set(allData.map((offer) => offer.brand))];
@@ -39,6 +39,9 @@ function Filters() {
     ...new Set(allData.map((offer) => offer.result[0].address.city)),
   ];
   const maxPrice = Math.max(...allData.map((offer) => offer.price));
+  const priceFilterMarkers = Array(Math.ceil(maxPrice / 10000) + 1).fill(0);
+  console.log(maxPrice);
+  console.log(priceFilterMarkers);
 
   if (brandFilter) {
     queryParams.append("brand", brandFilter);
@@ -52,11 +55,15 @@ function Filters() {
   if (cityFilter) {
     queryParams.append("city", cityFilter);
   }
+  if (priceFilter) {
+    console.log("pricefilter", priceFilter);
+    queryParams.append("price", priceFilter);
+  }
 
   const handleClick = () => {
     navigate(`/offers?${queryParams}`);
   };
-  console.log(maxPrice);
+
   return (
     <>
       <div id="filters">
@@ -132,19 +139,30 @@ function Filters() {
           onClick={() => setShowRange(!showRange)}
         />
         {showRange && (
-          <input
-            type="range"
-            placeholder="MAX PRICE"
-            value={selectedFilter.maxPrice}
-            max={maxPrice}
-            onChange={(e) => {
-              setPriceFilter(parseInt(e.target.value, 10));
-            }}
-          />
+          <div>
+            <input
+              type="range"
+              min="0"
+              max={maxPrice}
+              step="10000"
+              value={selectedFilter.price}
+              onChange={(e) => {
+                setPriceFilter(e.target.value);
+              }}
+            />
+            <output>{priceFilter}€</output>
+            <datalist id="markers">
+              {priceFilterMarkers.map((marker, index) => (
+                <option key={index} value={index * 10000}>
+                  {index * 10000}€
+                </option>
+              ))}
+            </datalist>
+          </div>
         )}
-      </div>
 
-      <button onClick={handleClick}>Search</button>
+        <button onClick={handleClick}>Search</button>
+      </div>
     </>
   );
 }

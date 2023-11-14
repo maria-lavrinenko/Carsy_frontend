@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { useAuth } from "../context/AuthContext";
 import myApi from "../service/service";
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,7 +25,7 @@ function OneOfferPage() {
   const fetchOneOffer = async () => {
     try {
       const response = await myApi.get(`/offers/${id}`);
-      // console.log(response.data);
+      console.log(response.data);
       setOneOffer(response.data[0]);
     } catch (error) {
       console.log(error);
@@ -42,9 +43,10 @@ function OneOfferPage() {
     }
   };
   useEffect(() => {
+    console.log("Fetching offer...");
     fetchOneOffer();
     checkIfFav();
-  }, [toUpdate]);
+  }, []);
 
   if (!oneOffer) {
     return <p>Loading...</p>;
@@ -135,29 +137,40 @@ function OneOfferPage() {
 
       console.log(response);
       setToUpdate(true);
-      // navigate(`/projects/${params.projectId}`);
+      fetchOneOffer();
     } catch (error) {
       console.log(error);
     }
   };
 
+  const render = ({ status: Status }) => {
+    return <h1>{status}</h1>;
+  };
+
   useEffect(() => {
     if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, {}));
+      setMap(
+        new window.google.maps.Map(ref.current, {
+          center: { lat: -25.344, lng: 131.031 },
+          zoom: 12,
+        })
+      );
     }
   }, [ref, map]);
+  console.log(oneOffer);
 
   return (
     <>
       <div id="oneOffer-card" key={id}>
         <Carousel indicators={true}>
-          {oneOffer.photo.map((photo) => (
-            <CarouselItem src={photo} width={"100%"} />
-          ))}
+          {oneOffer.photo.map((photo) => {
+            let url = photo === "carsy-logo.png" ? "/carsy-logo.png" : photo;
+            return <CarouselItem src={url} width={"100%"} />;
+          })}
         </Carousel>
         <h3>{oneOffer.brand}</h3>
         <h3>{oneOffer.model}</h3>
-        <h4>{oneOffer.price}</h4>
+        <h4>{oneOffer.price}€</h4>
         <h4>{oneOffer.energy}</h4>
         <p>
           Published on :{" "}
@@ -169,7 +182,16 @@ function OneOfferPage() {
         ) : (
           ""
         )}
-        {/* ADD GEOLOCALISATION AND RDV */}
+        {
+          <Wrapper apiKey={import.meta.env.GOOGLE_API_KEY} render={render}>
+            <div
+              id="map"
+              style={{ width: "100%", height: "200px" }}
+              ref={ref}
+            ></div>
+          </Wrapper>
+        }
+
         <div id="action-buttons">
           <div>
             {isMyOffer && (

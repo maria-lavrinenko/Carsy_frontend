@@ -2,13 +2,14 @@ import { useRef, useState } from "react";
 import myApi from "./../service/service";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function Signup({ isFlipped, setIsFlipped }) {
+function Signup({ isFlipped, setIsFlipped, userType, setUserType }) {
   const usernameInput = useRef();
   const passwordInput = useRef();
   const emailInput = useRef();
-  const [userType, setUserType] = useState(
-    location.state?.userType || "client"
-  );
+  // const userTypeState = useLocation();
+  // const [userType, setUserType] = useState(
+  //   location.state?.userTypeState || "client"
+  // );
   const zipcodeInput = useRef();
   const userTypeInput = useRef();
   const cityInput = useRef();
@@ -35,8 +36,7 @@ function Signup({ isFlipped, setIsFlipped }) {
         password,
         email,
         role,
-        zipcode,
-        city,
+        address: { zipcode, city },
         phone,
       });
       console.log("success", response);

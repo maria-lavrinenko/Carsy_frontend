@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import { useAuth } from "../context/AuthContext";
 import myApi from "../service/service";
 import { useNavigate, useParams } from "react-router-dom";
@@ -21,10 +21,25 @@ function OneOfferPage() {
   const { user, isLoggedIn } = useAuth();
   const navigate = useNavigate();
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: import.meta.env.API_KEY,
-  });
+  // const { isLoaded } = useLoadScript({
+  //   googleMapsApiKey: import.meta.env.API_KEY,
+  // });
   // const center = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
+
+  const libraries = ["places"];
+  const mapContainerStyle = {
+    width: "100vw",
+    height: "100vh",
+  };
+  const center = {
+    lat: 7.2905715, // default latitude
+    lng: 80.6337262, // default longitude
+  };
+
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: import.meta.env.VITE_API_KEY,
+    libraries,
+  });
 
   const fetchOneOffer = async () => {
     try {
@@ -46,12 +61,18 @@ function OneOfferPage() {
       console.log(error);
     }
   };
-
   useEffect(() => {
     console.log("Fetching offer...");
     fetchOneOffer();
     checkIfFav();
   }, []);
+  if (loadError) {
+    return <div>Error loading maps</div>;
+  }
+
+  if (!isLoaded) {
+    return <div>Loading maps</div>;
+  }
 
   if (!oneOffer) {
     return <p>Loading...</p>;
@@ -175,7 +196,7 @@ function OneOfferPage() {
         )}
         <div className="container">
           <div style={{ width: "100%", height: "90vh" }}>
-            {!isLoaded ? (
+            {/* {!isLoaded ? (
               <GoogleMap
                 center={{ lat: 40.397654, lng: 49.68543 }}
                 zoom={10}
@@ -191,7 +212,16 @@ function OneOfferPage() {
                   }
                 />
               </GoogleMap>
-            ) : null}
+            ) : null} */}
+            <div>
+              <GoogleMap
+                mapContainerStyle={mapContainerStyle}
+                zoom={10}
+                center={center}
+              >
+                <Marker position={center} />
+              </GoogleMap>
+            </div>
           </div>
           <div id="action-buttons">
             <div>

@@ -6,8 +6,8 @@ import Filters from "../components/Filters";
 
 function AllOffersPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [allOffers, setAllOffers] = useState(null);
-  const [sortby, setSortby] = useState("");
+  const [allOffers, setAllOffers] = useState([]);
+  const [sortBy, setSortBy] = useState("");
   const selectedBrand = searchParams.get("brand");
   const selectedModel = searchParams.get("model");
   const selectedEnergy = searchParams.get("energy");
@@ -49,7 +49,6 @@ function AllOffersPage() {
     selectedEnergy,
     selectedCity,
     selectedPrice,
-    sortby,
   ]);
 
   if (!allOffers) {
@@ -57,34 +56,31 @@ function AllOffersPage() {
   }
 
   const handleSortChange = (e) => {
-    const key = e.target.value;
     if (!allOffers) return;
+    const key = e.target.value;
     let sortedOffers;
-    if (key === "descreasing-price") {
+    if (key === "price") {
       sortedOffers = allOffers.toSorted((a, b) => {
-        b.price - a.price;
+        console.log(a.price, b.price);
+        return b.price - a.price;
       });
-    } else if (key === "increasing-price") {
-      sortedOffers = allOffers.toSorted((a, b) => {
-        a.price - b.price;
-      });
-    }
+    } else if (key === "") return;
 
     setAllOffers(sortedOffers);
-    setSortby(key);
-    // fetchAllOffers();
+    setSortBy(key);
   };
 
   return (
     <>
       <Filters />
       <div className="sort-container">
-        <select id="sort-select" onChange={handleSortChange} value={sortby}>
+        <select id="sort-select" onChange={handleSortChange} value={sortBy}>
           <option value="">Sort by: </option>
-          <option value="descreasing-price">Sort by: Price ()</option>
-          <option value="increasing-price">Sort by: Price()</option>
+
+          <option value="price">Sort by: Price</option>
         </select>
       </div>
+
       <List offersToFetch={allOffers} />
     </>
   );

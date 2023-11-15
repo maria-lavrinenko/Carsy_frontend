@@ -5,8 +5,13 @@
 .inner {
   white-space: nowrap;
   transition: transform 0.3s;
+  display: flex;
 }
 
+.inner > * {
+  width: 100%;
+  flex-shrink: 0;
+}
 .carousel-item {
   display: inline-flex;
   align-items: center;

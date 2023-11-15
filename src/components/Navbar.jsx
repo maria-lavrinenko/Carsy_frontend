@@ -6,6 +6,7 @@ import AuthDialog from "./AuthDialog";
 import NewOfferForm from "./NewOfferForm";
 import Logout from "./Logout";
 import { useAuthForm } from "../context/AuthFormContext";
+import "./Navbar.css";
 
 function Navbar() {
   const { authToggle, setAuthToggle } = useAuthForm();
@@ -18,56 +19,38 @@ function Navbar() {
       <div className="Navbar">
         <nav>
           <ul>
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-
-            <li>
-              <NavLink to="/about">About</NavLink>
-            </li>
-          </ul>
-        </nav>
-
-        <nav>
-          <ul>
-            {isLoggedIn ? (
-              <Logout />
-            ) : (
-              <>
-                <li>
-                  <button onClick={() => setAuthToggle(!authToggle)}>
-                    toggle Auth
-                  </button>
-
-                  {authToggle && <AuthDialog />}
-                </li>
-              </>
-            )}
+            <NavLink to="/">Home</NavLink>
           </ul>
         </nav>
         <nav>
           <ul>
-            {isLoggedIn && user && user.role === "carDealer" && (
-              <div>
-                <li>
-                  <div onClick={() => setNewFormToggle(!newFormToggle)}>
-                    New Offer
-                  </div>
-                  {newFormToggle && (
-                    <NewOfferForm
-                      setNewFormToggle={setNewFormToggle}
-                      newFormToggle={newFormToggle}
-                    />
-                  )}
-                </li>
+            <NavLink to="/about">About</NavLink>
+          </ul>
+        </nav>
 
-                <li>
-                  <NavLink to="/my-offers">My Offers</NavLink>
-                </li>
+        {isLoggedIn && user && user.role === "carDealer" && (
+          <nav>
+            <ul>
+              <NavLink to="/my-offers">My Offers</NavLink>
+            </ul>
+          </nav>
+        )}
+        {isLoggedIn && user && user.role === "carDealer" && (
+          <nav>
+            <ul>
+              <div onClick={() => setNewFormToggle(!newFormToggle)}>
+                New Offer
               </div>
-            )}
-          </ul>
-        </nav>
+              {newFormToggle && (
+                <NewOfferForm
+                  setNewFormToggle={setNewFormToggle}
+                  newFormToggle={newFormToggle}
+                />
+              )}
+            </ul>
+          </nav>
+        )}
+
         <nav>
           <ul>
             {isLoggedIn && user && user.role === "client" && (
@@ -75,8 +58,25 @@ function Navbar() {
             )}
           </ul>
         </nav>
-      </div>
 
+        <nav>
+          {isLoggedIn ? (
+            <ul>
+              <Logout />
+            </ul>
+          ) : (
+            <>
+              <ul>
+                <button onClick={() => setAuthToggle(!authToggle)}>
+                  toggle Auth
+                </button>
+
+                {authToggle && <AuthDialog />}
+              </ul>
+            </>
+          )}
+        </nav>
+      </div>
       <main>
         <Outlet />
       </main>

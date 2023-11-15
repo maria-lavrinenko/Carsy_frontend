@@ -5,6 +5,7 @@ import Filters from "../components/Filters";
 import { useAuth } from "./../context/AuthContext";
 import { useAuthForm } from "../context/AuthFormContext";
 import Carousel, { CarouselItem } from "../components/Carousel";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   const [allOffers, setAllOffers] = useState(null);
@@ -38,13 +39,23 @@ function HomePage() {
   return (
     <>
       <Filters />
-      <List offersToFetch={allOffers}></List>
 
-      {/* <Carousel indicators={false}>
+      <Carousel indicators={false}>
         {allOffers.map((offer) => (
-          <CarouselItem src={offer} width={"100%"} />
+          <Link to={`/offers/${offer._id}`}>
+            <CarouselItem
+              src={offer.photo[0]}
+              width={"100%"}
+              info={true}
+              // {...offer}
+              brand={offer.brand}
+              model={offer.model}
+              price={offer.price}
+            />
+          </Link>
         ))}
-      </Carousel> */}
+      </Carousel>
+
       <div id="auth">
         {!isLoggedIn && (
           <div id="auth">

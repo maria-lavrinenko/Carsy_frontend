@@ -2,8 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import "./Carousel.css";
 
-export const CarouselItem = ({ src, width }) => {
-  return <img className="carousel-item" style={{ width: width }} src={src} />;
+export const CarouselItem = ({ src, width, info, brand, model, price }) => {
+  // console.log(offer);
+  return (
+    <>
+      <div>
+        <img className="carousel-item" style={{ width: width }} src={src} />{" "}
+        {info && (
+          <div>
+            {brand} {model} {price}
+            {/* {offer.brand} */}
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
 const Carousel = ({ children, indicators }) => {

@@ -144,7 +144,7 @@ function Filters() {
               type="range"
               min="0"
               max={maxPrice}
-              step="10000"
+              step="5000"
               value={selectedFilter.price}
               onChange={(e) => {
                 setPriceFilter(e.target.value);

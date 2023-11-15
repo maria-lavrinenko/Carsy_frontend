@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import List from "../layouts/List";
 import myApi from "../service/service";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import Filters from "../components/Filters";
 
 function AllOffersPage() {
@@ -53,6 +53,15 @@ function AllOffersPage() {
 
   if (!allOffers) {
     return <p>Loading...</p>;
+  }
+  if (allOffers.length === 0) {
+    return (
+      <p>
+        It seems like we cannot meet your expectations right now ... Hopefully
+        you will find something interesting in our{" "}
+        <Link to="/offers">suggestions</Link>{" "}
+      </p>
+    );
   }
 
   const handleSortChange = (e) => {

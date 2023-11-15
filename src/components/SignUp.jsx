@@ -12,6 +12,7 @@ function Signup({ isFlipped, setIsFlipped }) {
   const zipcodeInput = useRef();
   const userTypeInput = useRef();
   const cityInput = useRef();
+  const streetInput = useRef();
   const phoneInput = useRef();
   const [error, setError] = useState("");
 
@@ -27,6 +28,7 @@ function Signup({ isFlipped, setIsFlipped }) {
     const role = userTypeInput.current.value;
     const zipcode = zipcodeInput.current.value;
     const city = cityInput.current.value;
+    const street = streetInput.current.value;
     const phone = phoneInput.current.value;
 
     try {
@@ -35,7 +37,7 @@ function Signup({ isFlipped, setIsFlipped }) {
         password,
         email,
         role,
-        address: { zipcode, city },
+        address: { zipcode, city, street },
         phone,
       });
       console.log("success", response);
@@ -84,23 +86,15 @@ function Signup({ isFlipped, setIsFlipped }) {
       </div>
       <div>
         <label htmlFor="zipcode">Zipcode: </label>
-        <input
-          type="number"
-          ref={zipcodeInput}
-          id="zipcode"
-          autoComplete="off"
-          required
-        />
+        <input type="number" ref={zipcodeInput} id="zipcode" required />
       </div>
       <div>
         <label htmlFor="city">City: </label>
-        <input
-          type="text"
-          ref={cityInput}
-          id="city"
-          autoComplete="off"
-          required
-        />
+        <input type="text" ref={cityInput} id="city" required />
+      </div>
+      <div>
+        <label htmlFor="street">Street Address: </label>
+        <input type="text" ref={streetInput} id="street" required />
       </div>
       <div>
         <label htmlFor="password">Password: </label>

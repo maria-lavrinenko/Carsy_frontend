@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import googleApi from "../service/googleMapsService";
 import { useAuth } from "../context/AuthContext";
 import myApi from "../service/service";
 import { useNavigate, useParams } from "react-router-dom";
@@ -21,31 +21,36 @@ function OneOfferPage() {
   const { user, isLoggedIn } = useAuth();
   const navigate = useNavigate();
 
-  // const { isLoaded } = useLoadScript({
-  //   googleMapsApiKey: import.meta.env.API_KEY,
-  // });
-  // const center = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
-
-  const libraries = ["places"];
-  const mapContainerStyle = {
-    width: "100vw",
-    height: "100vh",
-  };
-  const center = {
-    lat: 7.2905715, // default latitude
-    lng: 80.6337262, // default longitude
-  };
-
-  const { isLoaded, loadError } = useLoadScript({
+  const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_API_KEY,
-    libraries,
   });
+
+  // const libraries = ["places"];
+  // const mapContainerStyle = {
+  //   width: "100vw",
+  //   height: "100vh",
+  // };
+  // const center = {
+  //   lat: 7.2905715, // default latitude
+  //   lng: 80.6337262, // default longitude
+  // };
 
   const fetchOneOffer = async () => {
     try {
       const response = await myApi.get(`/offers/${id}`);
-      console.log(response.data);
       setOneOffer(response.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchLocation = async () => {
+    try {
+      const response = await googleApi.getLocation({
+        street: oneOffer.carDealer.address.street,
+        zipcode: oneOffer.carDealer.address.zipcode,
+        city: oneOffer.carDealer.address.city,
+      });
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -65,18 +70,17 @@ function OneOfferPage() {
     console.log("Fetching offer...");
     fetchOneOffer();
     checkIfFav();
+    fetchLocation();
   }, []);
-  if (loadError) {
-    return <div>Error loading maps</div>;
-  }
-
-  if (!isLoaded) {
-    return <div>Loading maps</div>;
-  }
 
   if (!oneOffer) {
     return <p>Loading...</p>;
   }
+
+  const center = {
+    lat: 7.2905715, // default latitude
+    lng: 80.6337262,
+  };
 
   const isMyOffer =
     isLoggedIn &&
@@ -169,8 +173,6 @@ function OneOfferPage() {
     }
   };
 
-  // console.log(oneOffer);
-
   return (
     <>
       <div id="oneOffer-card" key={id}>
@@ -195,33 +197,23 @@ function OneOfferPage() {
           ""
         )}
         <div className="container">
-          <div style={{ width: "100%", height: "90vh" }}>
-            {/* {!isLoaded ? (
+          <div>
+            {!isLoaded ? (
+              <h1>Loading...</h1>
+            ) : (
               <GoogleMap
-                center={{ lat: 40.397654, lng: 49.68543 }}
-                zoom={10}
-                mapContainerStyle={{
-                  width: "100%",
-                  height: "90vh",
-                }}
+                mapContainerClassName="map-container"
+                center={center}
+                zoom={15}
               >
-                <Marker
-                  position={{ lat: 18.52043, lng: 73.856743 }}
+                <MarkerF
+                  position={center}
                   icon={
                     "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
                   }
                 />
               </GoogleMap>
-            ) : null} */}
-            <div>
-              <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                zoom={10}
-                center={center}
-              >
-                <Marker position={center} />
-              </GoogleMap>
-            </div>
+            )}
           </div>
           <div id="action-buttons">
             <div>
@@ -322,4 +314,5 @@ function OneOfferPage() {
     </>
   );
 }
+
 export default OneOfferPage;

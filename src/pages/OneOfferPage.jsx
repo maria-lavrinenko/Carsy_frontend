@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import googleApi from "../service/googleMapsService";
 import { useAuth } from "../context/AuthContext";
 import myApi from "../service/service";
 import { useNavigate, useParams } from "react-router-dom";
 import Carousel, { CarouselItem } from "../components/Carousel";
+import "./OneOfferPage.css";
 
 function OneOfferPage() {
   const [oneOffer, setOneOffer] = useState();
@@ -15,6 +16,7 @@ function OneOfferPage() {
   const [energy, setEnergy] = useState("");
   const [price, setPrice] = useState("");
   const [year, setYear] = useState("");
+  const [location, setLocation] = useState({});
   const photoInput = useRef();
 
   const { id } = useParams();
@@ -25,32 +27,11 @@ function OneOfferPage() {
     googleMapsApiKey: import.meta.env.VITE_API_KEY,
   });
 
-  // const libraries = ["places"];
-  // const mapContainerStyle = {
-  //   width: "100vw",
-  //   height: "100vh",
-  // };
-  // const center = {
-  //   lat: 7.2905715, // default latitude
-  //   lng: 80.6337262, // default longitude
-  // };
-
   const fetchOneOffer = async () => {
     try {
       const response = await myApi.get(`/offers/${id}`);
+      console.log(response.data[0]);
       setOneOffer(response.data[0]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const fetchLocation = async () => {
-    try {
-      const response = await googleApi.getLocation({
-        street: oneOffer.carDealer.address.street,
-        zipcode: oneOffer.carDealer.address.zipcode,
-        city: oneOffer.carDealer.address.city,
-      });
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -70,16 +51,41 @@ function OneOfferPage() {
     console.log("Fetching offer...");
     fetchOneOffer();
     checkIfFav();
-    fetchLocation();
   }, []);
 
-  if (!oneOffer) {
+  const fetchLocation = async () => {
+    try {
+      const locationData = await googleApi.getLocation({
+        street: oneOffer.carDealer.address.street,
+        zipcode: oneOffer.carDealer.address.zipcode,
+        city: oneOffer.carDealer.address.city,
+      });
+
+      setLocation(locationData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (!oneOffer) return;
+    fetchLocation();
+  }, [oneOffer]);
+
+  const center = {
+    lat: location.lat,
+    lng: location.lng,
+  };
+  if (!oneOffer || !location) {
     return <p>Loading...</p>;
   }
 
-  const center = {
-    lat: 7.2905715, // default latitude
-    lng: 80.6337262,
+  const customMarker = {
+    path: "M29.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759   c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z    M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713   v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336   h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805",
+    fillColor: "#bbee11",
+    fillOpacity: 9,
+    strokeWeight: 1,
+    rotation: 0,
+    scale: 1,
   };
 
   const isMyOffer =
@@ -198,18 +204,20 @@ function OneOfferPage() {
         )}
         <div className="container">
           <div>
-            {!isLoaded ? (
-              <h1>Loading...</h1>
+            {!isLoaded || !center.lat ? (
+              <p>Map is loading ... </p>
             ) : (
               <GoogleMap
                 mapContainerClassName="map-container"
                 center={center}
+                mapContainerStyle={{ width: "100%", height: "100vh" }}
                 zoom={15}
               >
                 <MarkerF
                   position={center}
                   icon={
-                    "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                    // "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                    customMarker
                   }
                 />
               </GoogleMap>

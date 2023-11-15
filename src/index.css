@@ -1,4 +1,10 @@
 :root {
+  --color-green: #bbee11;
+  --color-white: #fcf7f8;
+  --color-light-grey: #ced3dc;
+  --color-dove-grey: #aba9c3;
+  --color-dark-grey: #525256;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;

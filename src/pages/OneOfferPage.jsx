@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   GoogleMap,
   useLoadScript,
   MarkerF,
-  InfoWindow,
+  InfoWindowF,
 } from "@react-google-maps/api";
 import googleApi from "../service/googleMapsService";
 import { useAuth } from "../context/AuthContext";
@@ -23,8 +23,8 @@ function OneOfferPage() {
   const [year, setYear] = useState("");
   const [location, setLocation] = useState({});
   const photoInput = useRef();
-  const [infoWindowData, setInfoWindowData] = useState();
 
+  const [activeMarker, setActiveMarker] = useState(null);
   const { id } = useParams();
   const { user, isLoggedIn } = useAuth();
   const navigate = useNavigate();
@@ -92,6 +92,13 @@ function OneOfferPage() {
     strokeWeight: 1.2,
     rotation: 0,
     scale: 1,
+  };
+
+  const handleActiveMarker = (marker) => {
+    if (marker === activeMarker) {
+      return;
+    }
+    setActiveMarker(marker);
   };
 
   const isMyOffer =
@@ -225,7 +232,30 @@ function OneOfferPage() {
                     //default "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
                     customMarker
                   }
-                />
+                  key={oneOffer._id}
+                  onClick={() => handleActiveMarker(oneOffer._id)}
+                >
+                  {activeMarker === oneOffer._id ? (
+                    <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                      <div id="info-window">
+                        <div id="info-window_content">
+                          {oneOffer.carDealer.username}{" "}
+                          {oneOffer.carDealer.address.street}{" "}
+                          {oneOffer.carDealer.address.zipcode}{" "}
+                          {oneOffer.carDealer.address.city}{" "}
+                        </div>
+                      </div>
+                    </InfoWindowF>
+                  ) : null}
+                  {/* {isOpen && (
+                  <InfoWindow
+                    position={center}
+                    onCloseClick={() => setIsOpen(false)}
+                  >
+                    <h1>{infoWindowData}</h1>
+                  </InfoWindow>
+                )} */}
+                </MarkerF>
               </GoogleMap>
             )}
           </div>

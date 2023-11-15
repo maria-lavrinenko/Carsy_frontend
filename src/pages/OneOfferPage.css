@@ -1,3 +1,6 @@
+* {
+  outline-color: black solid;
+}
 .container {
   height: 100vh;
   width: 100vw;
@@ -6,4 +9,21 @@
 .map-container {
   height: 100%;
   width: 100%;
+}
+#info-window {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  justify-content: center;
+  align-items: center;
+}
+
+#info-window_content {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  width: 50%;
+  text-wrap: wrap;
+  justify-content: center;
 }

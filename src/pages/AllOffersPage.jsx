@@ -59,10 +59,13 @@ function AllOffersPage() {
     if (!allOffers) return;
     const key = e.target.value;
     let sortedOffers;
-    if (key === "price") {
+    if (key === "descending-price") {
       sortedOffers = allOffers.toSorted((a, b) => {
-        console.log(a.price, b.price);
         return b.price - a.price;
+      });
+    } else if (key === "ascending-price") {
+      sortedOffers = allOffers.toSorted((a, b) => {
+        return a.price - b.price;
       });
     } else if (key === "") return;
 
@@ -77,7 +80,8 @@ function AllOffersPage() {
         <select id="sort-select" onChange={handleSortChange} value={sortBy}>
           <option value="">Sort by: </option>
 
-          <option value="price">Sort by: Price</option>
+          <option value="descending-price">Price: High to Low</option>
+          <option value="ascending-price">Price: Low to High</option>
         </select>
       </div>
 

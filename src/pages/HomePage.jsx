@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import myApi from "../service/service";
-import List from "../layouts/List";
 import Filters from "../components/Filters";
 import { useAuth } from "./../context/AuthContext";
 import { useAuthForm } from "../context/AuthFormContext";
 import Carousel, { CarouselItem } from "../components/Carousel";
 import { Link } from "react-router-dom";
+import "./HomePage.css";
 
 function HomePage() {
   const [allOffers, setAllOffers] = useState(null);
@@ -38,35 +38,45 @@ function HomePage() {
   };
   return (
     <>
-      <Filters />
-
-      <Carousel indicators={false}>
-        {allOffers.map((offer) => (
-          <Link to={`/offers/${offer._id}`}>
-            <CarouselItem
-              src={offer.photo[0]}
-              width={"100%"}
-              info={true}
-              // {...offer}
-              brand={offer.brand}
-              model={offer.model}
-              price={offer.price}
-            />
-          </Link>
-        ))}
-      </Carousel>
-
-      <div id="auth">
-        {!isLoggedIn && (
-          <div id="auth">
-            <button onClick={handleClientSignUp}>
-              I'm a client, I want to buy
-            </button>
-            <button onClick={handleCarDealerSignUp}>
-              I'm a car dealer, I want to sell
-            </button>
+      <div className="home-page">
+        <div id="home-page-carousel">
+          <div id="home-page-carousel_header">
+            {!isLoggedIn && (
+              <article id="home-page-carousel_text">
+                Check out our latest arrivals. Please log in to see more
+                information
+              </article>
+            )}
           </div>
-        )}
+          <Carousel indicators={false}>
+            {allOffers.map((offer) => (
+              <Link to={`/offers/${offer._id}`}>
+                <CarouselItem
+                  src={offer.photo[0]}
+                  width={"100%"}
+                  info={true}
+                  {...offer}
+                />
+              </Link>
+            ))}
+          </Carousel>
+        </div>
+
+        <div id="auth">
+          {!isLoggedIn && (
+            <div className="auth-buttons">
+              <button onClick={handleClientSignUp}>
+                I'm a client, I want to buy
+              </button>
+              <button onClick={handleCarDealerSignUp}>
+                I'm a car dealer, I want to sell
+              </button>
+            </div>
+          )}
+        </div>
+        <div id="filters-container">
+          <Filters />
+        </div>
       </div>
     </>
   );

@@ -67,101 +67,112 @@ function Filters() {
   return (
     <>
       <div id="filters">
-        <input
-          type="text"
-          placeholder="BRAND"
-          list="all-brands"
-          value={selectedFilter.brand}
-          onChange={(e) => {
-            setBrandFilter(e.target.value);
-          }}
-        />
-        <datalist id="all-brands">
-          {allBrands.map((brand) => (
-            <option key={brand} value={brand}>
-              {brand}
-            </option>
-          ))}
-        </datalist>
-        <input
-          type="text"
-          placeholder="MODEL"
-          list="all-models"
-          value={selectedFilter.model}
-          onChange={(e) => {
-            setModelFilter(e.target.value);
-          }}
-        />
-        <datalist id="all-models">
-          {allModels.map((model) => (
-            <option key={model} value={model}>
-              {model}
-            </option>
-          ))}
-        </datalist>
-
-        <input
-          type="text"
-          placeholder="ENERGY"
-          list="all-energy"
-          value={selectedFilter.energy}
-          onChange={(e) => {
-            setEnergyFilter(e.target.value);
-          }}
-        />
-        <datalist id="all-energy">
-          {allEnergy.map((energy) => (
-            <option key={energy} value={energy}>
-              {energy}
-            </option>
-          ))}
-        </datalist>
-
-        <input
-          type="text"
-          placeholder="CITY"
-          list="all-cities"
-          value={selectedFilter.city}
-          onChange={(e) => {
-            setLocationFilter(e.target.value);
-          }}
-        />
-        <datalist id="all-cities">
-          {allCities.map((city) => (
-            <option key={city} value={city}>
-              {city}
-            </option>
-          ))}
-        </datalist>
-        <input
-          type="text"
-          placeholder="MAX PRICE"
-          onClick={() => setShowRange(!showRange)}
-        />
-        {showRange && (
-          <div>
+        <div id="filters-first-block">
+          <div id="filters-first_col">
             <input
-              type="range"
-              min="0"
-              max={maxPrice}
-              step="5000"
-              value={selectedFilter.price}
+              type="text"
+              placeholder="BRAND"
+              list="all-brands"
+              value={selectedFilter.brand}
               onChange={(e) => {
-                setPriceFilter(e.target.value);
+                setBrandFilter(e.target.value);
               }}
             />
-            <output>{priceFilter}€</output>
-            <datalist id="markers">
-              {priceFilterMarkers.map((marker, index) => (
-                <option key={index} value={index * 10000}>
-                  {index * 10000}€
+            <datalist id="all-brands">
+              {allBrands.map((brand) => (
+                <option key={brand} value={brand}>
+                  {brand}
+                </option>
+              ))}
+            </datalist>
+
+            <input
+              type="text"
+              placeholder="CITY"
+              list="all-cities"
+              value={selectedFilter.city}
+              onChange={(e) => {
+                setLocationFilter(e.target.value);
+              }}
+            />
+            <datalist id="all-cities">
+              {allCities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
                 </option>
               ))}
             </datalist>
           </div>
-        )}
 
-        <button onClick={handleClick}>Search</button>
+          <div id="filters-second_col">
+            <input
+              type="text"
+              placeholder="MODEL"
+              list="all-models"
+              value={selectedFilter.model}
+              onChange={(e) => {
+                setModelFilter(e.target.value);
+              }}
+            />
+            <datalist id="all-models">
+              {allModels.map((model) => (
+                <option key={model} value={model}>
+                  {model}
+                </option>
+              ))}
+            </datalist>
+
+            <input
+              type="text"
+              placeholder="ENERGY"
+              list="all-energy"
+              value={selectedFilter.energy}
+              onChange={(e) => {
+                setEnergyFilter(e.target.value);
+              }}
+            />
+            <datalist id="all-energy">
+              {allEnergy.map((energy) => (
+                <option key={energy} value={energy}>
+                  {energy}
+                </option>
+              ))}
+            </datalist>
+          </div>
+        </div>
+        <div id="price-filter">
+          <input
+            type="text"
+            placeholder="MAX PRICE"
+            onClick={() => setShowRange(!showRange)}
+          />
+          {showRange && (
+            <div>
+              <input
+                type="range"
+                min="0"
+                max={maxPrice}
+                step="5000"
+                value={selectedFilter.price}
+                onChange={(e) => {
+                  setPriceFilter(e.target.value);
+                }}
+              />
+              <output>{priceFilter}€</output>
+              <datalist id="markers">
+                {priceFilterMarkers.map((marker, index) => (
+                  <option key={index} value={index * 10000}>
+                    {index * 10000}€
+                  </option>
+                ))}
+              </datalist>
+            </div>
+          )}
+        </div>
+
+        <button id="search-button" onClick={handleClick}>
+          Search
+        </button>
       </div>
     </>
   );

@@ -239,7 +239,7 @@ function OneOfferPage() {
                     <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
                       <div id="info-window">
                         <div id="info-window_content">
-                          {oneOffer.carDealer.username}{" "}
+                          <span>{oneOffer.carDealer.username} </span>
                           {oneOffer.carDealer.address.street}{" "}
                           {oneOffer.carDealer.address.zipcode}{" "}
                           {oneOffer.carDealer.address.city}{" "}

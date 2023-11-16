@@ -7,16 +7,27 @@
 
 .flip-modal-inner {
   position: relative;
+
   width: 100%;
   height: 100%;
   text-align: center;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px 0 rgba(187, 238, 17);
+  border: var(--border);
+  & button {
+    border-radius: var(--border-radius);
+    color: var(--color-dark-grey);
+    background-color: var(--color-green);
+  }
 }
 
 .flipped .flip-modal-inner {
   transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .flip-modal-front,
@@ -29,12 +40,41 @@
 }
 
 .flip-modal-front {
-  background-color: #bbb;
-  color: black;
+  margin-top: 2rems;
+  background-color: var(--color-dark-grey);
+  color: var(--color-green);
 }
 
 .flip-modal-back {
-  background-color: #2980b9;
-  color: white;
+  margin-top: 2rem;
+  background-color: var(--color-dark-grey);
+  color: var(--color-green);
   transform: rotateY(180deg);
+}
+.auth-question {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-inside-content {
+  margin-top: 1rem;
+}
+
+#test-account-info {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem auto;
+
+  line-height: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--color-light-grey);
+  & span {
+    color: var(--color-white);
+  }
+}
+#test-account-info_email {
+  display: flex;
+  flex-direction: column;
 }

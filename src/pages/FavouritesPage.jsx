@@ -24,7 +24,7 @@ function FavouritesPage() {
   }
   if (favOffers.length === 0) {
     return (
-      <p>
+      <p className="no-results-message">
         It seems like you don't have any favourites yet.. check out our latest{" "}
         <Link to="/offers">arrivals</Link>
       </p>

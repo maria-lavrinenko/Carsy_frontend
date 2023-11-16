@@ -42,6 +42,15 @@ function Login() {
       </div>
       <button>Login</button>
       <p className="error">{error}</p>
+      <article id="test-account-info">
+        Hint: you can use a test account!
+        <p id="test-account-info_email">
+          {" "}
+          Client:
+          <span>user@user.com 1234567890Aa</span>
+          CarDealer: <span> bestcars@bestcars.net 1234567890Aa</span>
+        </p>
+      </article>
     </form>
   );
 }

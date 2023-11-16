@@ -3,15 +3,13 @@ import { useSwipeable } from "react-swipeable";
 import "./Carousel.css";
 
 export const CarouselItem = ({ src, width, info, brand, model, price }) => {
-  // console.log(offer);
   return (
     <>
-      <div>
+      <div id="carousel-block">
         <img className="carousel-item" style={{ width: width }} src={src} />{" "}
         {info && (
-          <div>
-            {brand} {model} {price}
-            {/* {offer.brand} */}
+          <div className="carousel-info">
+            {brand} {model} {price}€
           </div>
         )}
       </div>

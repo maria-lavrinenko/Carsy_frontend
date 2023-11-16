@@ -28,7 +28,7 @@ function List(props) {
                 </Carousel>
               )}
 
-              <div id="offer-card_info">
+              <div className="carousel-offer-info">
                 <h3>{prop.brand ?? prop.offer.brand}</h3>
                 <h3>{prop.model ?? prop.offer.model}</h3>
                 <p>{prop.price ?? prop.offer.price} €</p>

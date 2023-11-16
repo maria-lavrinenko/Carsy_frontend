@@ -1,5 +1,8 @@
 import React from "react";
-import { Outlet, Link, NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
+
+import { Outlet, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import AuthDialog from "./AuthDialog";
@@ -17,21 +20,28 @@ function Navbar() {
   return (
     <>
       <div className="Navbar">
-        <nav>
+        <nav id="logo-slogan">
           <ul>
-            <NavLink to="/">Home</NavLink>
+            <Link to="/">
+              <img
+                id="navbar-logo"
+                src="./../public/carsy-logo-without-words _cutted.png"
+              />
+            </Link>
           </ul>
+          <div id="slogan">YOUR (RE)NEW CAR</div>
         </nav>
+
         <nav>
           <ul>
-            <NavLink to="/about">About</NavLink>
+            <Link to="/about">About</Link>
           </ul>
         </nav>
 
         {isLoggedIn && user && user.role === "carDealer" && (
           <nav>
             <ul>
-              <NavLink to="/my-offers">My Offers</NavLink>
+              <Link to="/my-offers">My Offers</Link>
             </ul>
           </nav>
         )}
@@ -54,7 +64,7 @@ function Navbar() {
         <nav>
           <ul>
             {isLoggedIn && user && user.role === "client" && (
-              <NavLink to="/fav">My Favourites</NavLink>
+              <Link to="/fav">My Favourites</Link>
             )}
           </ul>
         </nav>
@@ -68,10 +78,13 @@ function Navbar() {
             <>
               <ul>
                 <button onClick={() => setAuthToggle(!authToggle)}>
-                  toggle Auth
+                  <FontAwesomeIcon
+                    icon={faArrowRightToBracket}
+                    style={{ color: "#525256" }}
+                  />
                 </button>
 
-                {authToggle && <AuthDialog />}
+                {authToggle && <AuthDialog authToggle={authToggle} />}
               </ul>
             </>
           )}

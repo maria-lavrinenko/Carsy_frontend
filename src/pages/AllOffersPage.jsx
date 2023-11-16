@@ -3,6 +3,8 @@ import List from "../layouts/List";
 import myApi from "../service/service";
 import { useSearchParams, Link } from "react-router-dom";
 import Filters from "../components/Filters";
+import { useAuth } from "../context/AuthContext";
+import "./AllOffersPage.css";
 
 function AllOffersPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,6 +16,7 @@ function AllOffersPage() {
   const selectedCity = searchParams.get("city");
   const selectedPrice = searchParams.get("price");
   const queryParams = new URLSearchParams();
+  const { isLoggedIn } = useAuth();
 
   if (selectedBrand) {
     queryParams.append("brand", selectedBrand);
@@ -56,7 +59,7 @@ function AllOffersPage() {
   }
   if (allOffers.length === 0) {
     return (
-      <p>
+      <p id="no-search-for-filters">
         It seems like we cannot meet your expectations right now ... Hopefully
         you will find something interesting in our{" "}
         <Link to="/offers">suggestions</Link>{" "}
@@ -84,17 +87,29 @@ function AllOffersPage() {
 
   return (
     <>
-      <Filters />
-      <div className="sort-container">
-        <select id="sort-select" onChange={handleSortChange} value={sortBy}>
-          <option value="">Sort by: </option>
+      <div className="all-offers-page">
+        <Filters />
+        <div className="sort-container">
+          <select id="sort-select" onChange={handleSortChange} value={sortBy}>
+            <option value="">Sort by: </option>
 
-          <option value="descending-price">Price: High to Low</option>
-          <option value="ascending-price">Price: Low to High</option>
-        </select>
+            <option value="descending-price">Price: High to Low</option>
+            <option value="ascending-price">Price: Low to High</option>
+          </select>
+        </div>
+
+        <div id="list-carousel">
+          <div id="list-carousel_header">
+            {!isLoggedIn && (
+              <article id="list-carousel_text">
+                Check out our latest arrivals. Please log in to see more
+                information
+              </article>
+            )}
+          </div>
+          <List offersToFetch={allOffers} />
+        </div>
       </div>
-
-      <List offersToFetch={allOffers} />
     </>
   );
 }

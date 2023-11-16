@@ -3,7 +3,7 @@
 }
 
 .inner {
-  white-space: nowrap;
+  /* white-space: nowrap; */
   transition: transform 0.3s;
   display: flex;
 }
@@ -16,9 +16,21 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 50vh;
+  width: 50vh;
   background-color: black;
   color: whitesmoke;
+}
+
+.carousel-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  @media (width > 769px) {
+    font-size: 2rem;
+    margin: 1rem;
+  }
 }
 
 .indicators {

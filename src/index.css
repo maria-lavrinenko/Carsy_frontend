@@ -12,19 +12,18 @@
   --transition-delay: 0.2s;
 }
 
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-body {
+* {
   box-sizing: border-box;
   font-family: var(--font-family-base);
 }
+body {
+  margin: 0 auto;
+  background-color: var(--color-dove-grey);
+}
 
-.map-container {
-  width: 100%;
-  height: 200px;
+button {
+  border-radius: var(--border-radius);
+  /* border: var(--border); */
+  color: var(--color-dark-grey);
+  background-color: var(--color-green);
 }

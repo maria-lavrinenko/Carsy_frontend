@@ -30,7 +30,11 @@ function CarDealerOffersPage() {
   }
   return (
     <>
-      <List offersToFetch={myOffers}></List>
+      <div className="all-offers-page">
+        <div id="list-carousel">
+          <List offersToFetch={myOffers}></List>
+        </div>
+      </div>
     </>
   );
 }

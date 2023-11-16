@@ -11,7 +11,7 @@ function Logout() {
   };
   return (
     <>
-      <button onClick={handleLogout}>
+      <button id="#auth-button" onClick={handleLogout}>
         <FontAwesomeIcon
           icon={faArrowRightFromBracket}
           style={{ color: "#525256" }}

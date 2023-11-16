@@ -9,6 +9,13 @@ import googleApi from "../service/googleMapsService";
 import { useAuth } from "../context/AuthContext";
 import myApi from "../service/service";
 import { useNavigate, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrash,
+  faHeartCirclePlus,
+  faHeartCircleMinus,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import Carousel, { CarouselItem } from "../components/Carousel";
 import "./OneOfferPage.css";
 
@@ -185,7 +192,7 @@ function OneOfferPage() {
       const response = await myApi.put(`/offers/${id}`, fd);
 
       console.log(response);
-      setToUpdate(true);
+      setToUpdate(false);
       fetchOneOffer();
     } catch (error) {
       console.log(error);
@@ -195,7 +202,7 @@ function OneOfferPage() {
   return (
     <>
       <div className="oneOffer-page">
-        <div>
+        <div className="oneOffer-page_container">
           <div id="oneOffer-card" key={id}>
             <Carousel indicators={true}>
               {oneOffer.photo.map((photo) => {
@@ -204,77 +211,79 @@ function OneOfferPage() {
                 return <CarouselItem src={url} width={"100%"} />;
               })}
             </Carousel>
-            <h3>{oneOffer.brand}</h3>
-            <h3>{oneOffer.model}</h3>
-            <h4>{oneOffer.price}€</h4>
-            <h4>{oneOffer.energy}</h4>
-            <p>
-              Published on :{" "}
-              {new Date(oneOffer.updatedAt).toLocaleDateString(undefined)}
-            </p>
-            <p>Sold by: {oneOffer.carDealer.username}</p>
-            {oneOffer.carDealer.phone ? (
-              <p>Phone: {oneOffer.carDealer.phone}</p>
-            ) : (
-              ""
-            )}
-            <div className="container">
-              <div>
-                {!isLoaded || !center.lat ? (
-                  <p>Map is loading ... </p>
+            <div className="one-offer-info-block">
+              <div className="one-offer-info_car">
+                <h3>
+                  BRAND: <span>{oneOffer.brand}</span>
+                </h3>
+                <h3>
+                  MODEL: <span>{oneOffer.model}</span>
+                </h3>
+                <h4>
+                  PRICE: <span>{oneOffer.price}€</span>
+                </h4>
+                <h4>
+                  ENERGY: <span>{oneOffer.energy}</span>
+                </h4>
+              </div>
+              <div className="one-offer-info_cardealer">
+                <p>
+                  Published on :{" "}
+                  <span>
+                    {new Date(oneOffer.updatedAt).toLocaleDateString(undefined)}
+                  </span>
+                </p>
+                <p>
+                  Sold by: <span>{oneOffer.carDealer.username}</span>
+                </p>
+
+                {oneOffer.carDealer.phone ? (
+                  <p>
+                    Phone: <span>{oneOffer.carDealer.phone}</span>
+                  </p>
                 ) : (
-                  <GoogleMap
-                    mapContainerClassName="map-container"
-                    center={center}
-                    mapContainerStyle={{ width: "80%", height: "50vh" }}
-                    zoom={15}
-                  >
-                    <MarkerF
-                      position={center}
-                      icon={
-                        //default "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
-                        customMarker
-                      }
-                      key={oneOffer._id}
-                      onClick={() => handleActiveMarker(oneOffer._id)}
-                    >
-                      {activeMarker === oneOffer._id ? (
-                        <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                          <div id="info-window">
-                            <div id="info-window_content">
-                              <span>{oneOffer.carDealer.username} </span>
-                              {oneOffer.carDealer.address.street}{" "}
-                              {oneOffer.carDealer.address.zipcode}{" "}
-                              {oneOffer.carDealer.address.city}{" "}
-                            </div>
-                          </div>
-                        </InfoWindowF>
-                      ) : null}
-                    </MarkerF>
-                  </GoogleMap>
+                  ""
                 )}
               </div>
               <div id="action-buttons">
                 <div>
                   {isMyOffer && (
                     <div>
-                      <button onClick={handleDelete}>Delete</button>
-                      <button
+                      <div onClick={handleDelete}>
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          style={{ color: "#bbee11" }}
+                        />
+                      </div>
+                      <div
                         onClick={() => {
                           setToUpdate(true);
                         }}
                       >
-                        Update
-                      </button>
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          style={{ color: "#bbee11" }}
+                        />
+                      </div>
                     </div>
                   )}
 
                   {user.role === "client" && (
-                    <div>
+                    <div className="fav">
                       {isFavorite ? (
-                        <button onClick={handleUnlike}>Unlike</button>
+                        <div onClick={handleUnlike}>
+                          <FontAwesomeIcon
+                            icon={faHeartCircleMinus}
+                            style={{ color: "#bbee11" }}
+                          />
+                        </div>
                       ) : (
-                        <button onClick={handleLike}>Like</button>
+                        <div onClick={handleLike}>
+                          <FontAwesomeIcon
+                            icon={faHeartCirclePlus}
+                            style={{ color: "#bbee11" }}
+                          />
+                        </div>
                       )}
                     </div>
                   )}
@@ -283,7 +292,7 @@ function OneOfferPage() {
             </div>
             {toUpdate && (
               <div id="update-offer">
-                <div>
+                <div id="update-offer_form">
                   <h1>Update The Offer</h1>
                   <form onSubmit={handleSubmit}>
                     <div>
@@ -344,12 +353,47 @@ function OneOfferPage() {
                         id="photo"
                       />
                     </div>
-                    <button>Submit Update</button>
+                    <button onClick={handleSubmit}>Submit Update</button>
                   </form>
                 </div>
               </div>
             )}
           </div>
+        </div>
+        <div className="container">
+          {!isLoaded || !center.lat ? (
+            <p>Map is loading ... </p>
+          ) : (
+            <GoogleMap
+              mapContainerClassName="map-container"
+              center={center}
+              mapContainerStyle={{ width: "80%", height: "50vh" }}
+              zoom={15}
+            >
+              <MarkerF
+                position={center}
+                icon={
+                  //default "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                  customMarker
+                }
+                key={oneOffer._id}
+                onClick={() => handleActiveMarker(oneOffer._id)}
+              >
+                {activeMarker === oneOffer._id ? (
+                  <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                    <div id="info-window">
+                      <div id="info-window_content">
+                        <span>{oneOffer.carDealer.username} </span>
+                        {oneOffer.carDealer.address.street}{" "}
+                        {oneOffer.carDealer.address.zipcode}{" "}
+                        {oneOffer.carDealer.address.city}{" "}
+                      </div>
+                    </div>
+                  </InfoWindowF>
+                ) : null}
+              </MarkerF>
+            </GoogleMap>
+          )}
         </div>
       </div>
     </>

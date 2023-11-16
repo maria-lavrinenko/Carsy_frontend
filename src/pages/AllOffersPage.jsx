@@ -53,17 +53,17 @@ function AllOffersPage() {
     selectedCity,
     selectedPrice,
   ]);
-
   if (!allOffers) {
     return <p>Loading...</p>;
   }
+
   if (allOffers.length === 0) {
     return (
-      <p id="no-search-for-filters">
+      <div className="no-results-message">
         It seems like we cannot meet your expectations right now ... Hopefully
         you will find something interesting in our{" "}
         <Link to="/offers">suggestions</Link>{" "}
-      </p>
+      </div>
     );
   }
 
@@ -107,6 +107,7 @@ function AllOffersPage() {
               </article>
             )}
           </div>
+
           <List offersToFetch={allOffers} />
         </div>
       </div>

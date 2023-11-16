@@ -1,6 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRightToBracket,
+  faFileCirclePlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -47,10 +50,13 @@ function Navbar() {
         )}
         {isLoggedIn && user && user.role === "carDealer" && (
           <nav>
-            <ul>
-              <div onClick={() => setNewFormToggle(!newFormToggle)}>
-                New Offer
-              </div>
+            <ul id="new-offer-to-submit">
+              <button onClick={() => setNewFormToggle(!newFormToggle)}>
+                <FontAwesomeIcon
+                  icon={faFileCirclePlus}
+                  style={{ color: "#525256" }}
+                />
+              </button>
               {newFormToggle && (
                 <NewOfferForm
                   setNewFormToggle={setNewFormToggle}
@@ -77,7 +83,10 @@ function Navbar() {
           ) : (
             <>
               <ul>
-                <button onClick={() => setAuthToggle(!authToggle)}>
+                <button
+                  id="auth-button"
+                  onClick={() => setAuthToggle(!authToggle)}
+                >
                   <FontAwesomeIcon
                     icon={faArrowRightToBracket}
                     style={{ color: "#525256" }}

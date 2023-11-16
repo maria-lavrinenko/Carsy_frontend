@@ -32,7 +32,11 @@ function FavouritesPage() {
   }
   return (
     <>
-      <List offersToFetch={favOffers} />
+      <div className="all-offers-page">
+        <div id="list-carousel">
+          <List offersToFetch={favOffers} />
+        </div>
+      </div>
     </>
   );
 }

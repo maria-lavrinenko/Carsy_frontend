@@ -1,9 +1,15 @@
 .container {
-  height: 100vh;
-  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 90%;
 }
 
 .map-container {
+  margin: 1rem;
+  border: 2px solid var(--color-green);
+  border-radius: var(--border-radius);
   height: 100%;
   width: 100%;
 }
@@ -31,7 +37,7 @@
 .oneOffer-page {
   margin: 0 auto;
   margin-top: 7rem;
-  /* padding: 1rem; */
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,14 +51,108 @@
     padding-right: 0;
   }
 }
+.oneOffer-page_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 #oneOffer-card {
-  margin: 1rem;
+  margin: 0 auto;
   background-color: var(--color-dark-grey);
   border-radius: var(--border-radius);
   padding: 1rem;
+  width: 70%;
   @media (width < 769px) {
     margin: 0.4rem;
     padding: 0.2rem;
     padding-top: 1rem;
+  }
+}
+
+.one-offer-info_car {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  line-height: 0.2rem;
+  color: var(--color-white);
+
+  & span {
+    color: var(--color-green);
+  }
+  @media (width < 769px) {
+    margin: 0.2rem;
+    text-wrap: wrap;
+    line-height: 0.7rem;
+  }
+}
+.one-offer-info_cardealer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  color: var(--color-white);
+  & span {
+    color: var(--color-green);
+  }
+  @media (width < 769px) {
+    margin: 0.2rem;
+    text-wrap: wrap;
+    line-height: 0.7rem;
+  }
+}
+
+.one-offer-info-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+  @media (width < 769px) {
+    font-size: 0.5rem;
+    justify-content: center;
+  }
+}
+#action-buttons > * {
+  margin-right: 2rem;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  @media (width < 769px) {
+    font-size: 0.9rem;
+    align-items: center;
+    justify-content: center;
+    margin: 0.3rem;
+  }
+}
+#update-offer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--color-green);
+  /* margin: 1rem; */
+  padding: 0.5rem;
+  line-height: 2rem;
+  & h1 {
+    color: var(--color-green);
+  }
+  & form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+}
+#update-offer_form > * {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  & input {
+    border-radius: var(--border-radius);
   }
 }

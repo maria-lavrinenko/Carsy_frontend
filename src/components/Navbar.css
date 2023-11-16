@@ -71,3 +71,14 @@ a:visited {
 a:hover {
   color: var(--color-green);
 }
+
+#auth-button {
+  /* margin-right: 2rem; */
+  font-size: 1.5rem;
+
+  @media (width < 769px) {
+    font-size: 0.9rem;
+
+    margin: 0.3rem;
+  }
+}

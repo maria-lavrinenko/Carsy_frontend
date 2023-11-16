@@ -10,6 +10,7 @@ import AllOffersPage from "./pages/AllOffersPage";
 import LoggedInUser from "./components/LoggedInUser";
 import ClientRoute from "./navigation/ClientRoute";
 import CarDealerRoute from "./navigation/CarDealerRoute";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Routes>
           <Route element={<Navbar />}>
             <Route index element={<HomePage />} />
-            <Route path="/about">About Me</Route>
+            <Route path="/about" element={<AboutPage />}></Route>
             <Route path="/offers" element={<AllOffersPage />}></Route>
             <Route element={<LoggedInUser />}>
               <Route path="/offers/:id" element={<OneOfferPage />}></Route>

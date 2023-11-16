@@ -1,4 +1,14 @@
 .no-results-message {
   margin: 0 auto;
   margin-top: 7rem;
+  width: 70%;
+  font-size: 2rem;
+  text-align: center;
+  @media (width < 768px) {
+    font-size: 0.7rem;
+  }
+}
+
+input {
+  border-radius: var(--border-radius);
 }

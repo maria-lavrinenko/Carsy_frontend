@@ -1,5 +1,8 @@
 .carousel {
   overflow: hidden;
+  /* width: 70vh; */
+  align-items: center;
+  justify-content: center;
 }
 
 .inner {
@@ -16,7 +19,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 50vh;
+  width: 70vh;
   background-color: black;
   color: whitesmoke;
 }
@@ -40,9 +43,12 @@
 
 .indicators > button {
   margin: 5px;
+  @media (width < 768px) {
+    font-size: 0.5rem;
+  }
 }
 
 .indicators > button.active {
-  background-color: aqua;
-  color: red;
+  background-color: var(--color-white);
+  color: var(--color-dove-grey);
 }

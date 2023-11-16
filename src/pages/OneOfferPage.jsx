@@ -194,166 +194,163 @@ function OneOfferPage() {
 
   return (
     <>
-      <div id="oneOffer-card" key={id}>
-        <Carousel indicators={true}>
-          {oneOffer.photo.map((photo) => {
-            let url = photo === "carsy-logo.png" ? "/carsy-logo.png" : photo;
-            return <CarouselItem src={url} width={"100%"} />;
-          })}
-        </Carousel>
-        <h3>{oneOffer.brand}</h3>
-        <h3>{oneOffer.model}</h3>
-        <h4>{oneOffer.price}€</h4>
-        <h4>{oneOffer.energy}</h4>
-        <p>
-          Published on :{" "}
-          {new Date(oneOffer.updatedAt).toLocaleDateString(undefined)}
-        </p>
-        <p>Sold by: {oneOffer.carDealer.username}</p>
-        {oneOffer.carDealer.phone ? (
-          <p>Phone: {oneOffer.carDealer.phone}</p>
-        ) : (
-          ""
-        )}
-        <div className="container">
-          <div>
-            {!isLoaded || !center.lat ? (
-              <p>Map is loading ... </p>
+      <div className="oneOffer-page">
+        <div>
+          <div id="oneOffer-card" key={id}>
+            <Carousel indicators={true}>
+              {oneOffer.photo.map((photo) => {
+                let url =
+                  photo === "carsy-logo.png" ? "/carsy-logo.png" : photo;
+                return <CarouselItem src={url} width={"100%"} />;
+              })}
+            </Carousel>
+            <h3>{oneOffer.brand}</h3>
+            <h3>{oneOffer.model}</h3>
+            <h4>{oneOffer.price}€</h4>
+            <h4>{oneOffer.energy}</h4>
+            <p>
+              Published on :{" "}
+              {new Date(oneOffer.updatedAt).toLocaleDateString(undefined)}
+            </p>
+            <p>Sold by: {oneOffer.carDealer.username}</p>
+            {oneOffer.carDealer.phone ? (
+              <p>Phone: {oneOffer.carDealer.phone}</p>
             ) : (
-              <GoogleMap
-                mapContainerClassName="map-container"
-                center={center}
-                mapContainerStyle={{ width: "80%", height: "50vh" }}
-                zoom={15}
-              >
-                <MarkerF
-                  position={center}
-                  icon={
-                    //default "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
-                    customMarker
-                  }
-                  key={oneOffer._id}
-                  onClick={() => handleActiveMarker(oneOffer._id)}
-                >
-                  {activeMarker === oneOffer._id ? (
-                    <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                      <div id="info-window">
-                        <div id="info-window_content">
-                          <span>{oneOffer.carDealer.username} </span>
-                          {oneOffer.carDealer.address.street}{" "}
-                          {oneOffer.carDealer.address.zipcode}{" "}
-                          {oneOffer.carDealer.address.city}{" "}
-                        </div>
-                      </div>
-                    </InfoWindowF>
-                  ) : null}
-                  {/* {isOpen && (
-                  <InfoWindow
-                    position={center}
-                    onCloseClick={() => setIsOpen(false)}
-                  >
-                    <h1>{infoWindowData}</h1>
-                  </InfoWindow>
-                )} */}
-                </MarkerF>
-              </GoogleMap>
+              ""
             )}
-          </div>
-          <div id="action-buttons">
-            <div>
-              {isMyOffer && (
-                <div>
-                  <button onClick={handleDelete}>Delete</button>
-                  <button
-                    onClick={() => {
-                      setToUpdate(true);
-                    }}
+            <div className="container">
+              <div>
+                {!isLoaded || !center.lat ? (
+                  <p>Map is loading ... </p>
+                ) : (
+                  <GoogleMap
+                    mapContainerClassName="map-container"
+                    center={center}
+                    mapContainerStyle={{ width: "80%", height: "50vh" }}
+                    zoom={15}
                   >
-                    Update
-                  </button>
-                </div>
-              )}
-
-              {user.role === "client" && (
+                    <MarkerF
+                      position={center}
+                      icon={
+                        //default "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                        customMarker
+                      }
+                      key={oneOffer._id}
+                      onClick={() => handleActiveMarker(oneOffer._id)}
+                    >
+                      {activeMarker === oneOffer._id ? (
+                        <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                          <div id="info-window">
+                            <div id="info-window_content">
+                              <span>{oneOffer.carDealer.username} </span>
+                              {oneOffer.carDealer.address.street}{" "}
+                              {oneOffer.carDealer.address.zipcode}{" "}
+                              {oneOffer.carDealer.address.city}{" "}
+                            </div>
+                          </div>
+                        </InfoWindowF>
+                      ) : null}
+                    </MarkerF>
+                  </GoogleMap>
+                )}
+              </div>
+              <div id="action-buttons">
                 <div>
-                  {isFavorite ? (
-                    <button onClick={handleUnlike}>Unlike</button>
-                  ) : (
-                    <button onClick={handleLike}>Like</button>
+                  {isMyOffer && (
+                    <div>
+                      <button onClick={handleDelete}>Delete</button>
+                      <button
+                        onClick={() => {
+                          setToUpdate(true);
+                        }}
+                      >
+                        Update
+                      </button>
+                    </div>
+                  )}
+
+                  {user.role === "client" && (
+                    <div>
+                      {isFavorite ? (
+                        <button onClick={handleUnlike}>Unlike</button>
+                      ) : (
+                        <button onClick={handleLike}>Like</button>
+                      )}
+                    </div>
                   )}
                 </div>
-              )}
+              </div>
             </div>
+            {toUpdate && (
+              <div id="update-offer">
+                <div>
+                  <h1>Update The Offer</h1>
+                  <form onSubmit={handleSubmit}>
+                    <div>
+                      <label htmlFor="brand">Brand: </label>
+                      <input
+                        type="text"
+                        id="brand"
+                        value={brand}
+                        onChange={handleBrand}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="model">Model: </label>
+                      <input
+                        type="text"
+                        id="model"
+                        value={model}
+                        onChange={handleModel}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="price">Price: </label>
+                      <input
+                        type="text"
+                        id="price"
+                        value={price}
+                        onChange={handlePrice}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="energy">Energy: </label>
+                      <input
+                        type="text"
+                        id="energy"
+                        value={energy}
+                        onChange={handleEnergy}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="year">Year: </label>
+                      <input
+                        type="text"
+                        id="year"
+                        maxLength="4"
+                        pattern="\d{4}"
+                        value={year}
+                        onChange={handleYear}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="photo">Photo </label>
+                      <input
+                        ref={photoInput}
+                        accept="image/png, image/jpeg"
+                        type="file"
+                        multiple
+                        name=""
+                        id="photo"
+                      />
+                    </div>
+                    <button>Submit Update</button>
+                  </form>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-        {toUpdate && (
-          <div id="update-offer">
-            <div>
-              <h1>Update The Offer</h1>
-              <form onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor="brand">Brand: </label>
-                  <input
-                    type="text"
-                    id="brand"
-                    value={brand}
-                    onChange={handleBrand}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="model">Model: </label>
-                  <input
-                    type="text"
-                    id="model"
-                    value={model}
-                    onChange={handleModel}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="price">Price: </label>
-                  <input
-                    type="text"
-                    id="price"
-                    value={price}
-                    onChange={handlePrice}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="energy">Energy: </label>
-                  <input
-                    type="text"
-                    id="energy"
-                    value={energy}
-                    onChange={handleEnergy}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="year">Year: </label>
-                  <input
-                    type="text"
-                    id="year"
-                    maxLength="4"
-                    pattern="\d{4}"
-                    value={year}
-                    onChange={handleYear}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="photo">Photo </label>
-                  <input
-                    ref={photoInput}
-                    accept="image/png, image/jpeg"
-                    type="file"
-                    multiple
-                    name=""
-                    id="photo"
-                  />
-                </div>
-                <button>Submit Update</button>
-              </form>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );

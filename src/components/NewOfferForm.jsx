@@ -114,13 +114,7 @@ function NewOfferForm({ setNewFormToggle, newFormToggle }) {
                   />
                 </div>
                 <button>Submit</button>
-                <button
-                  onClick={() => {
-                    setNewFormToggle((current) => !current);
-                  }}
-                >
-                  Not now
-                </button>
+
                 <p className="error">{error}</p>
               </form>
             </div>

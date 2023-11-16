@@ -25,7 +25,7 @@ function Navbar() {
             <Link to="/">
               <img
                 id="navbar-logo"
-                src="/public/carsy-logo-without-words _cutted.png"
+                src="/carsy-logo-without-words _cutted.png"
               />
             </Link>
           </ul>

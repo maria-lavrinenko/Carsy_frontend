@@ -3,7 +3,6 @@ import { Outlet, Link } from "react-router-dom";
 import Carousel, { CarouselItem } from "../components/Carousel";
 
 function List(props) {
-  console.log(props);
   return (
     <>
       {props.offersToFetch.map((prop) => {

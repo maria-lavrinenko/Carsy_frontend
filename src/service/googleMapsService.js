@@ -17,7 +17,6 @@ googleApi.getLocation = async ({ zipcode, city, street }) => {
       },
     })
     .then((response) => {
-      console.log(response);
       return response.data.results[0].geometry.location;
     })
     .catch((error) => console.log(error));

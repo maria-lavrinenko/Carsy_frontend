@@ -40,7 +40,7 @@ function Signup({ isFlipped, setIsFlipped }) {
         address: { zipcode, city, street },
         phone,
       });
-      console.log("success", response);
+
       setIsFlipped(!isFlipped);
     } catch (error) {
       console.log(error);

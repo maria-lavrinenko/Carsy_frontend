@@ -8,7 +8,7 @@ function FavouritesPage() {
   const fetchFavourites = async () => {
     try {
       const response = await myApi.get("/favourites");
-      console.log(response.data);
+
       setFavOffers(response.data);
     } catch (error) {
       console.log(error);

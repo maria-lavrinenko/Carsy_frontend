@@ -25,7 +25,7 @@ function AuthContextWrapper({ children }) {
     }
     try {
       const user = await myApi.getUserInfos();
-      console.log(user);
+
       setUser(user);
       setIsLoggedIn(true);
       setIsLoading(false);

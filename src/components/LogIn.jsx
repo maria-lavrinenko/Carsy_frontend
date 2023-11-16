@@ -18,7 +18,7 @@ function Login() {
     const password = passwordInput.current.value;
     try {
       const response = await myApi.post("/auth/login", { email, password });
-      console.log("success", response);
+
       localStorage.setItem("authToken", response.data.token);
       await authenticateUser();
       navigate("/");

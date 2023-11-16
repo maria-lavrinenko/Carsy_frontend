@@ -50,7 +50,7 @@ function NewOfferForm({ setNewFormToggle, newFormToggle }) {
 
     try {
       const response = await myApi.post("/offers", fd);
-      console.log("success", response);
+
       setIsSubmitted(true);
       setNewFormToggle((current) => !current);
       navigate("/my-offers");

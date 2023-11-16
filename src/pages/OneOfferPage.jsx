@@ -43,7 +43,7 @@ function OneOfferPage() {
   const fetchOneOffer = async () => {
     try {
       const response = await myApi.get(`/offers/${id}`);
-      console.log(response.data[0]);
+
       setOneOffer(response.data[0]);
     } catch (error) {
       console.log(error);
@@ -55,7 +55,6 @@ function OneOfferPage() {
       const response = await myApi.get(`/offers/${id}/favourites`);
       const { isFavorite } = response.data;
       setIsFavourite(isFavorite);
-      // console.log(isFavorite);
     } catch (error) {
       console.log(error);
     }
@@ -191,7 +190,6 @@ function OneOfferPage() {
     try {
       const response = await myApi.put(`/offers/${id}`, fd);
 
-      console.log(response);
       setToUpdate(false);
       fetchOneOffer();
     } catch (error) {

@@ -14,7 +14,7 @@ function HomePage() {
   const fetchAllOffers = async () => {
     try {
       const response = await myApi.get("/offers");
-      console.log(response.data);
+
       setAllOffers(response.data);
     } catch (error) {
       console.log(error);

@@ -11,7 +11,7 @@ function CarDealerOffersPage() {
   const fetchMyOffers = async () => {
     try {
       const response = await myApi.get("/my-offers");
-      console.log(response.data);
+
       setMyOffers(response.data);
     } catch (error) {
       console.log(error);

@@ -18,7 +18,7 @@ function Filters() {
   const fetchAllData = async () => {
     try {
       const response = await myApi.get("/offers");
-      console.log(response.data);
+
       setAllData(response.data);
     } catch (error) {
       console.log(error);
@@ -40,8 +40,6 @@ function Filters() {
   ];
   const maxPrice = Math.max(...allData.map((offer) => offer.price));
   const priceFilterMarkers = Array(Math.ceil(maxPrice / 10000) + 1).fill(0);
-  console.log(maxPrice);
-  console.log(priceFilterMarkers);
 
   if (brandFilter) {
     queryParams.append("brand", brandFilter);

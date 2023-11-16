@@ -19,7 +19,6 @@ function Navbar() {
   const [newFormToggle, setNewFormToggle] = useState(false);
   const { isLoggedIn, user } = useAuth();
 
-  console.log(user);
   return (
     <>
       <div className="Navbar">

@@ -26,7 +26,11 @@ function CarDealerOffersPage() {
     return <p>Loading...</p>;
   }
   if (myOffers.length === 0) {
-    return <div>It seems like you haven't published any offer yet...</div>;
+    return (
+      <div className="no-results-message">
+        It seems like you haven't published any offer yet...
+      </div>
+    );
   }
   return (
     <>

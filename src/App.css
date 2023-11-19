@@ -12,7 +12,6 @@
 input {
   border-radius: var(--border-radius);
 }
-
 .about-message {
   margin: 0 auto;
   margin-top: 5rem;
@@ -25,32 +24,29 @@ input {
   width: 70%;
   font-size: 2rem;
 
-  @media (width < 768px) {
-    width: 100%;
+  @media (max-width: 767px) {
+    width: 90%;
     font-size: 0.9rem;
-    margin: 3rem 0.7rem;
+    margin: 4rem 0.75rem;
   }
 }
+
 #about-page_pictures {
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
+
   & img {
     border-radius: var(--border-radius);
   }
-  @media (width < 768px) {
+
+  @media (max-width: 767px) {
     width: 90%;
   }
 }
 
-#first-about-picture {
-  display: flex;
-  flex-direction: column;
-  margin: 0.5rem;
-  width: 50%;
-  box-sizing: border-box;
-}
+#first-about-picture,
 #second-about-picture {
   display: flex;
   flex-direction: column;
@@ -58,9 +54,11 @@ input {
   width: 50%;
   box-sizing: border-box;
 }
+
 #about-page-tech_used {
   align-self: flex-start;
   line-height: 0.5rem;
+
   & span {
     color: var(--color-green);
     text-shadow: 1px 1px 2px var(--color-dark-grey);
@@ -75,10 +73,13 @@ input {
   justify-content: center;
   text-align: justify;
   font-size: 1.2rem;
+
   & h1 {
     align-self: center;
   }
-  @media (width < 768px) {
+
+  @media (max-width: 767px) {
+    margin: 1rem auto;
     font-size: 0.7rem;
   }
 }

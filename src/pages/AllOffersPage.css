@@ -13,6 +13,9 @@
   @media (width < 769px) {
     padding-left: 0;
     padding-right: 0;
+    width: 100%;
+    font-size: 0.9rem;
+    margin: 3rem 0.7rem;
   }
 }
 
@@ -26,6 +29,7 @@
     margin: 0.4rem;
     padding: 0.2rem;
     padding-top: 1rem;
+    width: 90%;
   }
 }
 #list-carousel_header {

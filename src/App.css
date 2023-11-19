@@ -15,18 +15,22 @@ input {
 
 .about-message {
   margin: 0 auto;
-  margin-top: 7rem;
+  margin-top: 5rem;
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   width: 70%;
   font-size: 2rem;
 
   @media (width < 768px) {
-    margin: 0.5rem;
+    width: 100%;
     font-size: 0.9rem;
+    margin: 3rem 0.7rem;
   }
 }
-
 #about-page_pictures {
   display: flex;
   width: 100%;
@@ -34,6 +38,9 @@ input {
   align-items: center;
   & img {
     border-radius: var(--border-radius);
+  }
+  @media (width < 768px) {
+    width: 90%;
   }
 }
 
@@ -61,9 +68,11 @@ input {
 }
 
 .about-message_text {
+  margin: inherit;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: justify;
   font-size: 1.2rem;
   & h1 {

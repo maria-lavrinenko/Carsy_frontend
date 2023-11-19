@@ -27,14 +27,6 @@ function AboutPage() {
           offers to the list of favourites and remove them. It is also possible
           to view the full list of your current favourites.{" "}
         </p>
-        <p>
-          This project is my first full-stack web application, built using
-          React.js for the frontend, Express for the backend, and MongoDB Atlas
-          for the database. Passwords are securely protected using bcrypt, and
-          location data is retrieved using the Google Maps API. Stylish icons
-          from the FontAwesome library are integrated for an enhanced visual
-          experience.{" "}
-        </p>
         <div id="about-page-tech_used">
           <h3>Technologies Used</h3>{" "}
           <ul>
@@ -73,7 +65,10 @@ function AboutPage() {
           {" "}
           https://github.com/maria-lavrinenko.
         </Link>{" "}
-        <p>Contributions are welcome! </p>
+        <p>
+          This project is my first full-stack web application. Contributions are
+          welcome!{" "}
+        </p>
         <p>Feel free to open issues or submit pull requests.</p>
       </div>
       <div id="about-page_pictures">

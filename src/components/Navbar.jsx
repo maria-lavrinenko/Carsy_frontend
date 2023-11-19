@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRightToBracket,
   faFileCirclePlus,
+  faRectangleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Outlet, Link } from "react-router-dom";
@@ -51,10 +52,17 @@ function Navbar() {
           <nav>
             <ul id="new-offer-to-submit">
               <button onClick={() => setNewFormToggle(!newFormToggle)}>
-                <FontAwesomeIcon
-                  icon={faFileCirclePlus}
-                  style={{ color: "#525256" }}
-                />
+                {!newFormToggle ? (
+                  <FontAwesomeIcon
+                    icon={faFileCirclePlus}
+                    style={{ color: "#525256" }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faRectangleXmark}
+                    style={{ color: "#525256" }}
+                  />
+                )}
               </button>
               {newFormToggle && (
                 <NewOfferForm
@@ -86,10 +94,17 @@ function Navbar() {
                   id="auth-button"
                   onClick={() => setAuthToggle(!authToggle)}
                 >
-                  <FontAwesomeIcon
-                    icon={faArrowRightToBracket}
-                    style={{ color: "#525256" }}
-                  />
+                  {!authToggle ? (
+                    <FontAwesomeIcon
+                      icon={faArrowRightToBracket}
+                      style={{ color: "#525256" }}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faRectangleXmark}
+                      style={{ color: "#525256" }}
+                    />
+                  )}
                 </button>
 
                 {authToggle && <AuthDialog authToggle={authToggle} />}

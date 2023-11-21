@@ -22,6 +22,7 @@ import "./OneOfferPage.css";
 function OneOfferPage() {
   const [oneOffer, setOneOffer] = useState();
   const [isFavorite, setIsFavourite] = useState(false);
+  const [favClicked, setFavClicked] = useState(false);
   const [toUpdate, setToUpdate] = useState(false);
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
@@ -122,8 +123,16 @@ function OneOfferPage() {
     }
   };
 
+  const handleFavClick = () => {
+    setFavClicked(true);
+    setTimeout(() => {
+      setFavClicked(false);
+    }, 300);
+  };
+
   const handleUnlike = async () => {
     try {
+      handleFavClick();
       const response = await myApi.delete(`/offers/${id}/favourites`);
       setIsFavourite(false);
     } catch (error) {
@@ -133,6 +142,7 @@ function OneOfferPage() {
 
   const handleLike = async () => {
     try {
+      handleFavClick();
       const reponse = await myApi.post(`/offers/${id}/favourites`);
       setIsFavourite(true);
     } catch (error) {
@@ -269,14 +279,20 @@ function OneOfferPage() {
                   {user.role === "client" && (
                     <div className="fav">
                       {isFavorite ? (
-                        <div onClick={handleUnlike}>
+                        <div
+                          className={`fav-icon ${favClicked ? "clicked" : ""}`}
+                          onClick={handleUnlike}
+                        >
                           <FontAwesomeIcon
                             icon={faHeartCircleMinus}
                             style={{ color: "#bbee11" }}
                           />
                         </div>
                       ) : (
-                        <div onClick={handleLike}>
+                        <div
+                          className={`fav-icon ${favClicked ? "clicked" : ""}`}
+                          onClick={handleLike}
+                        >
                           <FontAwesomeIcon
                             icon={faHeartCirclePlus}
                             style={{ color: "#bbee11" }}
@@ -365,7 +381,7 @@ function OneOfferPage() {
             <GoogleMap
               mapContainerClassName="map-container"
               center={center}
-              mapContainerStyle={{ width: "80%", height: "50vh" }}
+              mapContainerStyle={{ height: "50vh" }}
               zoom={15}
             >
               <MarkerF

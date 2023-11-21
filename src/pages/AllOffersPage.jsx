@@ -89,6 +89,7 @@ function AllOffersPage() {
     <>
       <div className="all-offers-page">
         <Filters />
+
         <div className="sort-container">
           <select id="sort-select" onChange={handleSortChange} value={sortBy}>
             <option value="">Sort by: </option>

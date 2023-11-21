@@ -17,6 +17,9 @@
   border-radius: var(--border-radius);
   position: relative;
   padding: 2rem;
+  @media (width < 769px) {
+    width: 90%;
+  }
 }
 
 .modalContent {

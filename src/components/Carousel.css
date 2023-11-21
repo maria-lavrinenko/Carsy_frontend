@@ -9,6 +9,7 @@
   /* white-space: nowrap; */
   transition: transform 0.3s;
   display: flex;
+  width: 85vw;
 }
 
 .inner > * {

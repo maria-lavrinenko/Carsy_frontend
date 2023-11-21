@@ -42,7 +42,7 @@ function HomePage() {
         <div id="home-page-carousel">
           <div id="home-page-carousel_header">
             {!isLoggedIn && (
-              <article id="home-page-carousel_text">
+              <article id="list-carousel_text">
                 Check out our latest arrivals. Please log in to see more
                 information
               </article>

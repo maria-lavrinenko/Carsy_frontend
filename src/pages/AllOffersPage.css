@@ -15,7 +15,7 @@
     padding-right: 0;
     width: 90vw;
     font-size: 0.9rem;
-    margin: 4rem auto;
+    margin: 7rem auto;
   }
 }
 
@@ -48,7 +48,7 @@
   white-space: pre-line;
   @media (width < 769px) {
     font-weight: 300;
-    font-size: 0.5rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -56,9 +56,9 @@
   margin-bottom: 1rem;
   color: var(--color-green);
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  column-gap: 1rem;
+  column-gap: 0.5rem;
   font-size: 1rem;
   @media (width < 769px) {
     font-weight: 300;

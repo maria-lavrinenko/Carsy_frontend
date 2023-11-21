@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 90%;
+  width: 100%;
 }
 
 .map-container {
@@ -62,7 +62,7 @@
   background-color: var(--color-dark-grey);
   border-radius: var(--border-radius);
   padding: 1rem;
-  width: 70%;
+  width: 90%;
   @media (width < 769px) {
     margin: 0.4rem;
     padding: 0.2rem;
@@ -110,8 +110,8 @@
   align-items: flex-start;
   margin-top: 1.5rem;
   @media (width < 769px) {
-    font-size: 0.5rem;
-    justify-content: center;
+    font-size: 0.6rem;
+    justify-content: space-evenly;
   }
 }
 #action-buttons > * {
@@ -132,7 +132,6 @@
   justify-content: center;
   align-items: center;
   border: 1px solid var(--color-green);
-  /* margin: 1rem; */
   padding: 0.5rem;
   line-height: 2rem;
   & h1 {
@@ -155,4 +154,18 @@
   & input {
     border-radius: var(--border-radius);
   }
+  @media (width < 769px) {
+    font-size: 0.9rem;
+    align-items: center;
+    justify-content: center;
+    margin: 0.3rem;
+  }
+}
+
+.fav-icon {
+  transition: transform 0.3s ease-in-out;
+}
+
+.fav-icon.clicked {
+  transform: scale(1.5);
 }

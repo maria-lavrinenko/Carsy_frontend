@@ -21,11 +21,14 @@
   background-color: var(--color-dark-grey);
   border-radius: var(--border-radius);
   padding: 1rem;
-  width: 50vw;
+  width: 95%;
   @media (width < 769px) {
     margin: 0.4rem;
     padding: 0.2rem;
     padding-top: 1rem;
+  }
+  @media (width > 768px) {
+    width: 50vw;
   }
 }
 #home-page-carousel_header {

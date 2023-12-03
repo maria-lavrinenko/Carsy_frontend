@@ -63,8 +63,9 @@
   background-color: var(--color-dark-grey);
   border-radius: var(--border-radius);
   padding: 1rem;
-  width: 90%;
+  width: 70%;
   @media (width < 769px) {
+    width: 90%;
     margin: 0.4rem;
     padding: 0.2rem;
     padding-top: 1rem;
@@ -116,6 +117,7 @@
   }
 }
 #action-buttons > * {
+  margin-top: 0.3rem;
   margin-right: 2rem;
   font-size: 2rem;
   display: flex;

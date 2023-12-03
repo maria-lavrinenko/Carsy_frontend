@@ -1,15 +1,16 @@
 .carousel {
   overflow: hidden;
-  /* width: 70vh; */
   align-items: center;
   justify-content: center;
 }
 
 .inner {
-  /* white-space: nowrap; */
   transition: transform 0.3s;
   display: flex;
-  width: 85vw;
+
+  /* @media (width > 769px) {
+    width: 50vw;
+  } */
 }
 
 .inner > * {

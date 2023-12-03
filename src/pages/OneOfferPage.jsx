@@ -233,6 +233,9 @@ function OneOfferPage() {
                 <h4>
                   ENERGY: <span>{oneOffer.energy}</span>
                 </h4>
+                <h4>
+                  YEAR: <span>{oneOffer.year}</span>
+                </h4>
               </div>
               <div className="one-offer-info_cardealer">
                 <p>
